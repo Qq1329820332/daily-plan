@@ -69,7 +69,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--toast-bg);color:var(--bg);padding:12px 24px;border-radius:16px;font-size:14px;font-weight:600;opacity:0;transition:all .4s cubic-bezier(.175,.885,.32,1.275);pointer-events:none;z-index:1000;box-shadow:0 8px 30px rgba(0,0,0,.15);display:flex;align-items:center;gap:8px}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast .ico{width:24px;height:24px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}.tool-card{background:var(--card-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--card-border);border-radius:14px;padding:14px;box-shadow:var(--card-shadow);transition:all .2s;text-decoration:none;color:var(--text);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}.tool-card:hover{transform:translateY(-2px);background:var(--card-hover);box-shadow:0 8px 24px rgba(149,157,165,0.12)}.tool-card .ico{font-size:28px}.tool-card .nm{font-size:14px;font-weight:600}.tool-card .de{font-size:11px;color:var(--sub)}.footer{text-align:center;padding:16px 0;font-size:12px;color:var(--footer);line-height:1.8}</style>
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}.tool-card{background:var(--card-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--card-border);border-radius:14px;padding:14px;box-shadow:var(--card-shadow);transition:all .2s;text-decoration:none;color:var(--text);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}.tool-card:hover{transform:translateY(-2px);background:var(--card-hover);box-shadow:0 8px 24px rgba(149,157,165,0.12)}.tool-card .ico{font-size:28px}.tool-card .nm{font-size:14px;font-weight:600}.tool-card .de{font-size:11px;color:var(--sub)}.footer{text-align:center;padding:16px 0;font-size:12px;color:var(--footer);line-height:1.8}\n.bnav{position:fixed;bottom:0;left:0;right:0;height:56px;background:var(--card-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--card-border);display:flex;z-index:998;padding-bottom:env(safe-area-inset-bottom)}\n.bnav a,.bnav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--sub);text-decoration:none;font-size:10px;gap:3px;border:none;background:none;cursor:pointer;font-family:inherit;transition:color .2s}\n.bnav a:hover,.bnav button:hover{color:var(--accent)}\n.bnav .ic{font-size:20px}\n.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:999;display:none;align-items:flex-end;justify-content:center}\n.modal.show{display:flex}\n.modal .box{background:var(--bg);border-radius:16px 16px 0 0;width:100%;max-width:480px;padding:20px 16px 30px;max-height:80vh;overflow-y:auto;animation:slideUp .3s ease}\n@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}\n.modal .boxtitle{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--accent)}\n.modal input,.modal textarea,.modal select{width:100%;border:1px solid var(--chk-border);border-radius:8px;padding:8px 10px;font-size:14px;font-family:inherit;background:var(--card-bg);color:var(--text);margin-bottom:8px;outline:none}\n.modal input:focus,.modal textarea:focus{border-color:var(--accent)}\n.modal textarea{min-height:80px;resize:vertical}\n.modal .btn-row{display:flex;gap:8px;margin-top:8px}\n.modal .btn-row button{flex:1;padding:10px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}\n.modal .btns{background:var(--accent);color:#fff}\n.modal .btnc{background:var(--btn-bg);color:var(--text)}\n.err-item{background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:10px 14px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}\n.err-item .inf{flex:1}\n.err-item .inf .sj{font-size:11px;color:var(--accent);font-weight:600}\n.err-item .inf .ct{font-size:13px;color:var(--text);margin-top:2px}\n.err-item .del{background:var(--red);color:#fff;border:none;border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;flex-shrink:0;margin-left:8px}\n.collapse{border:1px solid var(--card-border);border-radius:12px;margin-bottom:8px;overflow:hidden;background:var(--card-bg)}\n.collapse .chd{width:100%;padding:12px 16px;background:var(--card-bg);border:none;color:var(--text);font-size:14px;font-weight:600;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:inherit}\n.collapse .chd .arr{transition:transform .3s}\n.collapse .chd.open .arr{transform:rotate(180deg)}\n.collapse .cbd{display:none;padding:0 16px 14px;font-size:13px;line-height:1.8;color:var(--text)}\n.collapse .cbd.show{display:block}\n.cbd .fm{font-family:monospace;background:var(--btn-bg);padding:2px 6px;border-radius:4px;font-size:12px}\n.app{padding-bottom:70px}\n@media(max-width:400px){.week .dot{width:34px;height:34px;font-size:11px}}\n</style>
 </head>
 <body>
 <div class=glow1></div><div class=glow2></div>
@@ -122,12 +122,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 <div class=task data-id=w3 data-time=15>
 <div class=chk><svg width=14 height=14 viewBox="0 0 14 14"><path d="M2 7.5L5.5 11L12 3" stroke=white stroke-width=2.5 fill=none stroke-linecap=round stroke-linejoin=round/></svg></div>
 <div class=body><div class=name>周末复习 · 本周错题回顾</div><div class=desc>不欠债，回头看一遍</div></div>
-<div class=tail><span class=dur>15</span></div></div></div><div class=review id=reviewSec><div class=hdr>🔄 今日复习提醒</div><div class=empty id=reviewEmpty>开始学习后，这里会自动提示需要复习的内容</div></div><div class=section><div class=section-title><span>🧰 学习工具</span><span class=line></span><span class="pill pill-blu">辅助</span></div><div class=tools-grid><a class=tool-card href=https://keykey.cc/word-practice/session target=_blank rel=noopener><span class=ico>⌨</span><span class=nm>KeyKey 打字练单词</span><span class=de>边打字边记专升本词汇</span></a><a class=tool-card href=https://ipachart.app/zh-CN target=_blank rel=noopener><span class=ico>🎵</span><span class=nm>IPA 交互音标表</span><span class=de>点击音标听发音</span></a></div></div><div class=scheck id=scheckSec><div class=hdr>📝 每周自检</div><textarea id=scheckText placeholder="这周哪个章节没吃透？下周重点攻什么？"></textarea><button class=sv-btn onclick=saveScheck()>保存</button></div><div class=footer>点击任务行自动勾选 · 点 B站 看课+计时同步 · 可切换深色模式<br>每天打开 · 点行自动保存 · 数据在浏览器 · 工具可辅助学习</div></div><div class=toast id=toast><span class=ico>&#x2713;</span> <span id=ttx>已保存</span></div><script>
-const pad=n=>String(n).padStart(2,'0'),wd=['日','一','二','三','四','五','六'];
+<div class=tail><span class=dur>15</span></div></div></div><div class=review id=reviewSec><div class=hdr>🔄 今日复习提醒</div><div class=empty id=reviewEmpty>开始学习后，这里会自动提示需要复习的内容</div></div><div class=section><div class=section-title><span>🧰 学习工具</span><span class=line></span><span class="pill pill-blu">辅助</span></div><div class=tools-grid><a class=tool-card href=https://keykey.cc/word-practice/session target=_blank rel=noopener><span class=ico>⌨</span><span class=nm>KeyKey 打字练单词</span><span class=de>边打字边记专升本词汇</span></a><a class=tool-card href=https://ipachart.app/zh-CN target=_blank rel=noopener><span class=ico>🎵</span><span class=nm>IPA 交互音标表</span><span class=de>点击音标听发音</span></a></div></div><div class=scheck style="margin-bottom:14px"><div class=hdr>\u1F345 \u756A\u8304\u949F</div>
+<div style="display:flex;gap:8px;margin-top:6px">
+<button class=sv-btn onclick=togglePomo() id=pomoBtn style="float:none">\u25B6 \u5F00\u59CB\u756A\u8304</button>
+<span style="font-size:13px;color:var(--sub);padding:5px 0" id=pomoInfo>25min\u4E13\u6CE8 + 5min\u4F11\u606F</span></div></div>
+<div class=scheck id=scheckSec><div class=hdr>📝 每周自检</div><textarea id=scheckText placeholder="这周哪个章节没吃透？下周重点攻什么？"></textarea><button class=sv-btn onclick=saveScheck()>保存</button></div><div class=modal id=errModal onclick="if(event.target===this)closeErrModal()"><div class=box>
+<div class=boxtitle>\u274C \u9519\u9898\u5F55\u5165</div>
+<select id=errSubj><option>\u9AD8\u7B49\u6570\u5B66</option><option>\u82F1\u8BED</option><option>\u4FE1\u606F\u6280\u672F</option><option>\u653F\u6CBB</option></select>
+<textarea id=errCont placeholder="\u8F93\u5165\u9519\u9898\u5185\u5BB9\u6216\u8003\u70B9..."></textarea>
+<div class=btn-row><button class=btns onclick=saveErr()>\u4FDD\u5B58</button><button class=btnc onclick=closeErrModal()>\u53D6\u6D88</button></div>
+<div id=errList style="margin-top:12px"></div></div></div>\n<div class=modal id=fmModal onclick="if(event.target===this)closeFormula()"><div class=box>
+<div class=boxtitle>\u1F4DA \u5907\u8003\u8D44\u6599\u901F\u67E5</div>
+<div class=collapse><button class=chd onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">\u1F522 \u9AD8\u6570\u516C\u5F0F\u901F\u67E5 <span class=arr>\u25BC</span></button>
+<div class=cbd>
+<b>\u5BFC\u6570\u516C\u5F0F</b><br><span class=fm>(x^n)' = nx^(n-1)</span><br><span class=fm>(sin x)' = cos x</span><br><span class=fm>(cos x)' = -sin x</span><br><span class=fm>(e^x)' = e^x</span><br><span class=fm>(ln x)' = 1/x</span><br><br>
+<b>\u79EF\u5206\u516C\u5F0F</b><br><span class=fm>&int; x^n dx = x^(n+1)/(n+1)+C</span><br><span class=fm>&int; sin x dx = -cos x+C</span><br><span class=fm>&int; cos x dx = sin x+C</span><br><span class=fm>&int; e^x dx = e^x+C</span><br><span class=fm>&int; 1/x dx = ln|x|+C</span><br><br>
+<b>\u6781\u9650\u516C\u5F0F</b><br><span class=fm>lim sin x/x &rarr; 1 (x&rarr;0)</span><br><span class=fm>lim (1+1/x)^x &rarr; e</span>
+</div></div>\n<div class=collapse><button class=chd onclick=\"this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')\">\u1F1EC\u1F1E7 \u4E13\u5347\u672C\u6838\u5FC3\u8BCD\u6C47 <span class=arr>\u25BC</span></button>\n<div class=cbd>\nabandon \u2014 \u653E\u5F03<br>absorb \u2014 \u5438\u6536<br>abstract \u2014 \u62BD\u8C61\u7684<br>academic \u2014 \u5B66\u672F\u7684<br>access \u2014 \u8FDB\u5165<br>account \u2014 \u8D26\u6237<br>achieve \u2014 \u8FBE\u6210<br>acknowledge \u2014 \u627F\u8BA4<br>acquire \u2014 \u83B7\u5F97<br>adapt \u2014 \u9002\u5E94<br><br>\n<b>\u8FDE\u8BCD\u7BC7</b><br>although \u2014 \u5C3D\u7BA1<br>therefore \u2014 \u56E0\u6B64<br>however \u2014 \u7136\u800C<br>meanwhile \u2014 \u4E0E\u6B64\u540C\u65F6<br>furthermore \u2014 \u6B64\u5916<br>nevertheless \u2014 \u5C3D\u7BA1\u5982\u6B64<br>otherwise \u2014 \u5426\u5219\n</div></div>\n<div class=collapse><button class=chd onclick=\"this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')\">\u1F4BB \u4FE1\u606F\u6280\u672F\u8003\u70B9 <span class=arr>\u25BC</span></button>\n<div class=cbd>\n<b>\u8BA1\u7B97\u673A\u57FA\u7840</b><br>\u2022 \u8FDB\u5236\u8F6C\u6362\uFF1A\u4E8C\u8FDB\u5236\u2194\u5341\u8FDB\u5236\u2194\u5341\u516D\u8FDB\u5236<br>\u2022 \u539F\u7801\u3001\u53CD\u7801\u3001\u8865\u7801<br>\u2022 ASCII\u7801 / Unicode<br><br>\n<b>\u64CD\u4F5C\u7CFB\u7EDF</b><br>\u2022 \u8FDB\u7A0B\u4E0E\u7EBF\u7A0B<br>\u2022 \u5185\u5B58\u7BA1\u7406<br>\u2022 \u6587\u4EF6\u7CFB\u7EDF<br><br>\n<b>\u7F51\u7EDC</b><br>\u2022 OSI\u4E03\u5C42\u6A21\u578B<br>\u2022 TCP/IP\u534F\u8BAE<br>\u2022 HTTP\u3001DNS\u3001IP\u5730\u5740\n</div></div></div></div>\n<div class=footer>点击任务行自动勾选 · 点 B站 看课+计时同步 · 可切换深色模式<br>每天打开 · 点行自动保存 · 数据在浏览器 · 工具可辅助学习</div></div><div class=toast id=toast><span class=ico>&#x2713;</span> <span id=ttx>已保存</span></div><script>
+
+const pad=n=>String(n).padStart(2,'0'),wd=['\u65E5','\u4E00','\u4E8C','\u4E09','\u56DB','\u4E94','\u516D'];
 function dk(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
 function wk(d){const dd=new Date(d),day=dd.getDay(),diff=dd.getDate()-day+(day===0?-6:1);const m=new Date(dd.setDate(diff));return m.getFullYear()+'-'+pad(m.getMonth()+1)+'-'+pad(m.getDate())}
 
-// Countdown
 (function cd(){
   var target=new Date(2027,3,18,0,0,0);
   var now=new Date();
@@ -136,41 +152,37 @@ function wk(d){const dd=new Date(d),day=dd.getDay(),diff=dd.getDate()-day+(day==
   if(el)el.textContent=days;
 })();
 
-// Render date
 (function rd(){
   var d=new Date();
-  document.getElementById('d').textContent=d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日 周'+wd[d.getDay()];
+  document.getElementById('d').textContent=d.getFullYear()+'\u5E74'+(d.getMonth()+1)+'\u6708'+d.getDate()+'\u65E5 \u5468'+wd[d.getDay()];
 })();
 
-// Daily quotes
 (function qq(){
-  var q=[{en:"The secret of getting ahead is getting started.",cn:"领先的秘诀就是开始行动。"},{en:"Success is the sum of small efforts, repeated day in and day out.",cn:"成功就是日复一日点滴努力的积累。"},{en:"It does not matter how slowly you go as long as you do not stop.",cn:"走得慢没关系，只要不停下来。"},{en:"The best time to plant a tree was 20 years ago. The second best time is now.",cn:"种树最好的时间是十年前，其次是现在。"},{en:"Believe you can and you're halfway there.",cn:"相信你可以，你就已经成功了一半。"},{en:"The only way to do great work is to love what you do.",cn:"做出伟大工作的唯一方法就是热爱你所做的事。"},{en:"Don't watch the clock; do what it does. Keep going.",cn:"不要只看时钟，学它一样一直走下去。"},{en:"The future belongs to those who believe in the beauty of their dreams.",cn:"未来属于那些相信自己梦想之美的人。"},{en:"You don't have to be great to start, but you have to start to be great.",cn:"你不需要很厉害才能开始，但你需要开始才能变得很厉害。"},{en:"Small daily improvements over time lead to stunning results.",cn:"日复一日的小进步，最终带来惊人的结果。"}];
+  var q=[{en:"The secret of getting ahead is getting started.",cn:"\u9886\u5148\u7684\u79D8\u8BC0\u5C31\u662F\u5F00\u59CB\u884C\u52A8\u3002"},{en:"Success is the sum of small efforts, repeated day in and day out.",cn:"\u6210\u529F\u5C31\u662F\u65E5\u590D\u4E00\u65E5\u70B9\u6EF4\u52AA\u529B\u7684\u79EF\u7D2F\u3002"},{en:"It does not matter how slowly you go as long as you do not stop.",cn:"\u8D70\u5F97\u6162\u6CA1\u5173\u7CFB\uFF0C\u53EA\u8981\u4E0D\u505C\u4E0B\u6765\u3002"},{en:"The best time to plant a tree was 20 years ago. The second best time is now.",cn:"\u79CD\u6811\u6700\u597D\u7684\u65F6\u95F4\u662F\u5341\u5E74\u524D\uFF0C\u5176\u6B21\u662F\u73B0\u5728\u3002"},{en:"Believe you can and you're halfway there.",cn:"\u76F8\u4FE1\u4F60\u53EF\u4EE5\uFF0C\u4F60\u5C31\u5DF2\u7ECF\u6210\u529F\u4E86\u4E00\u534A\u3002"},{en:"The only way to do great work is to love what you do.",cn:"\u505A\u51FA\u4F1F\u5927\u5DE5\u4F5C\u7684\u552F\u4E00\u65B9\u6CD5\u5C31\u662F\u70ED\u7231\u4F60\u6240\u505A\u7684\u4E8B\u3002"},{en:"Don't watch the clock; do what it does. Keep going.",cn:"\u4E0D\u8981\u53EA\u770B\u65F6\u949F\uFF0C\u5B66\u5B83\u4E00\u6837\u4E00\u76F4\u8D70\u4E0B\u53BB\u3002"},{en:"The future belongs to those who believe in the beauty of their dreams.",cn:"\u672A\u6765\u5C5E\u4E8E\u90A3\u4E9B\u76F8\u4FE1\u81EA\u5DF1\u68A6\u60F3\u4E4B\u7F8E\u7684\u4EBA\u3002"},{en:"You don't have to be great to start, but you have to start to be great.",cn:"\u4F60\u4E0D\u9700\u8981\u5F88\u5389\u5BB3\u624D\u80FD\u5F00\u59CB\uFF0C\u4F46\u4F60\u9700\u8981\u5F00\u59CB\u624D\u80FD\u53D8\u5F97\u5F88\u5389\u5BB3\u3002"},{en:"Small daily improvements over time lead to stunning results.",cn:"\u65E5\u590D\u4E00\u65E5\u7684\u5C0F\u8FDB\u6B65\uFF0C\u6700\u7EC8\u5E26\u6765\u60CA\u4EBA\u7684\u7ED3\u679C\u3002"}];
   var qi=new Date().getDate()%q.length;
   document.getElementById('qe').textContent=q[qi].en;
   document.getElementById('qc').textContent=q[qi].cn;
 })();
 
-// Theme toggle
 function tt(){
   var d=document.body.classList.toggle('dark');
   localStorage.setItem('_t',d?'dark':'light');
-  document.getElementById('themeBtn').textContent=d?'\u{1F319}':'\u{2600}\u{FE0F}';
+  document.getElementById('themeBtn').textContent=d?'\uD83C\uDF19':'\u2600\uFE0F';
 }
-(function(){if(localStorage.getItem('_t')==='dark'){document.body.classList.add('dark');document.getElementById('themeBtn').textContent='\u{1F319}'}})();
+(function(){if(localStorage.getItem('_t')==='dark'){document.body.classList.add('dark');document.getElementById('themeBtn').textContent='\uD83C\uDF19'}})();
 
-// Milestone
 function upMs(){
   var s=parseInt(document.getElementById('s').textContent)||0;
   var msgs=[
-    {min:0,ico:'\u{1F331}',msg:'千里之行，始于足下',sub:'今天就是最好的开始'},
-    {min:1,ico:'\u{1F525}',msg:'开门红！第一天',sub:'坚持就是胜利'},
-    {min:3,ico:'\u2B50',msg:'连续3天，好势头',sub:'习惯正在形成'},
-    {min:7,ico:'\u{1F31F}',msg:'7天！小里程碑',sub:'你已经超越了大多数人'},
-    {min:14,ico:'\u{1F4AA}',msg:'两周了，了不起',sub:'自律让你自由'},
-    {min:21,ico:'\u{1F3C6}',msg:'21天！习惯养成',sub:'学习已经融入日常'},
-    {min:30,ico:'\u{1F389}',msg:'一个月！恭喜',sub:'这是质的飞跃'},
-    {min:60,ico:'\u{1F451}',msg:'60天！王者级别',sub:'你已经是自己的英雄'},
-    {min:100,ico:'\u{1F30D}',msg:'100天！传奇',sub:'没有什么能阻挡你了'}
+    {min:0,ico:'\uD83C\uDF31',msg:"\u5343\u91CC\u4E4B\u884C\uFF0C\u59CB\u4E8E\u8DB3\u4E0B",sub:"\u4ECA\u5929\u5C31\u662F\u6700\u597D\u7684\u5F00\u59CB"},
+    {min:1,ico:'\uD83D\uDD25',msg:"\u5F00\u95E8\u7EA2\uFF01\u7B2C\u4E00\u5929",sub:"\u575A\u6301\u5C31\u662F\u80DC\u5229"},
+    {min:3,ico:'\u2B50',msg:"\u8FDE\u7EED3\u5929\uFF0C\u597D\u52BF\u5934",sub:"\u4E60\u60EF\u6B63\u5728\u5F62\u6210"},
+    {min:7,ico:'\uD83C\uDF1F',msg:"7\u5929\uFF01\u5C0F\u91CC\u7A0B\u7891",sub:"\u4F60\u5DF2\u7ECF\u8D85\u8D8A\u4E86\u5927\u591A\u6570\u4EBA"},
+    {min:14,ico:'\uD83D\uDCAA',msg:"\u4E24\u5468\u4E86\uFF0C\u4E86\u4E0D\u8D77",sub:"\u81EA\u5F8B\u8BA9\u4F60\u81EA\u7531"},
+    {min:21,ico:'\uD83C\uDFC6',msg:"21\u5929\uFF01\u4E60\u60EF\u517B\u6210",sub:"\u5B66\u4E60\u5DF2\u7ECF\u878D\u5165\u65E5\u5E38"},
+    {min:30,ico:'\uD83C\uDF89',msg:"\u4E00\u4E2A\u6708\uFF01\u606D\u559C",sub:"\u8FD9\u662F\u8D28\u7684\u98DE\u8DC3"},
+    {min:60,ico:'\uD83D\uDC51',msg:"60\u5929\uFF01\u738B\u8005\u7EA7\u522B",sub:"\u4F60\u5DF2\u7ECF\u662F\u81EA\u5DF1\u7684\u82F1\u96C4"},
+    {min:100,ico:'\uD83C\uDF0D',msg:"100\u5929\uFF01\u4F20\u5947",sub:"\u6CA1\u6709\u4EC0\u4E48\u80FD\u963B\u6321\u4F60\u4E86"}
   ];
   var el=document.getElementById('mstone');
   if(s>=1){el.style.display='block';var msg=msgs[0];
@@ -181,26 +193,24 @@ function upMs(){
   }else{el.style.display='none'}
 }
 
-// Rest toggle
 function toggleRest(){
   var r=document.getElementById('restTog');
   var l=document.getElementById('restLbl');
   var on=r.classList.toggle('on');
   localStorage.setItem('_rest',on?'1':'0');
-  l.innerHTML=on?'今日休息日':'今日学习模式';
+  l.innerHTML=on?"\u4ECA\u65E5\u4F11\u606F\u65E5":"\u4ECA\u65E5\u5B66\u4E60\u6A21\u5F0F";
 }
-(function(){if(localStorage.getItem('_rest')==='1'){document.getElementById('restTog').classList.add('on');document.getElementById('restLbl').innerHTML='今日休息日'}})();
+(function(){if(localStorage.getItem('_rest')==='1'){document.getElementById('restTog').classList.add('on');document.getElementById('restLbl').innerHTML="\u4ECA\u65E5\u4F11\u606F\u65E5"}})();
 
-// Review reminders
 function upReview(){
   var sv=JSON.parse(localStorage.getItem('_wk')||'{}');
   var items=[];
   for(var i=1;i<=7;i++){var d=new Date();d.setDate(d.getDate()-i);
     var k=wk(d);var day=d.getDay();
     if(sv[k]&&sv[k][day]===true){
-      if(i===1)items.push({txt:'昨天学的内容，今天必须复习',tag:'第1天',cls:'tag-d1'});
-      if(i===3)items.push({txt:'前天的知识点，还记得吗？',tag:'第3天',cls:'tag-d3'});
-      if(i===7)items.push({txt:'一周前的内容，快速过一遍',tag:'第7天',cls:'tag-d7'});
+      if(i===1)items.push({txt:"\u6628\u5929\u5B66\u7684\u5185\u5BB9\uFF0C\u4ECA\u5929\u5FC5\u987B\u590D\u4E60",tag:"\u7B2C1\u5929",cls:'tag-d1'});
+      if(i===3)items.push({txt:"\u524D\u5929\u7684\u77E5\u8BC6\u70B9\uFF0C\u8FD8\u8BB0\u5F97\u5417\uFF1F",tag:"\u7B2C3\u5929",cls:'tag-d3'});
+      if(i===7)items.push({txt:"\u4E00\u5468\u524D\u7684\u5185\u5BB9\uFF0C\u5FEB\u901F\u8FC7\u4E00\u904D",tag:"\u7B2C7\u5929",cls:'tag-d7'});
     }
   }
   var el=document.getElementById('reviewSec');
@@ -218,14 +228,12 @@ function upReview(){
   }else{em.style.display='block'}
 }
 
-// Save weekly check
 function saveScheck(){
   var v=document.getElementById('scheckText').value;
-  if(v.trim()){var key='_sc_'+wk(new Date());localStorage.setItem(key,v);alert('已保存！周末回头看看')}
+  if(v.trim()){var key='_sc_'+wk(new Date());localStorage.setItem(key,v);alert("\u5DF2\u4FDD\u5B58\uFF01\u5468\u672B\u56DE\u5934\u770B\u770B")}
 }
 (function(){var key='_sc_'+wk(new Date());var sv=localStorage.getItem(key);if(sv)document.getElementById('scheckText').value=sv})();
 
-// Week bar render
 function rw(){
   var bar=document.getElementById('w'),t=new Date().getDay(),k=wk(new Date());
   var sv=JSON.parse(localStorage.getItem('_wk')||'{}'),dt=sv[k]||{};
@@ -236,7 +244,6 @@ function rw(){
   document.getElementById('wc').textContent=Object.values(dt).filter(function(v){return v===true}).length;
 }
 
-// Streak
 function us(){
   var sv=JSON.parse(localStorage.getItem('_wk')||'{}');
   var st=0,d=new Date();
@@ -247,7 +254,6 @@ function us(){
   document.getElementById('s').textContent=st;upMs();upReview();
 }
 
-// Stats
 function ua(){
   var ts=document.querySelectorAll('.task');
   var d=0,m=0,total=ts.length;
@@ -259,17 +265,15 @@ function ua(){
   document.getElementById('progFill').style.width=pct+'%';
 }
 
-// Toast
 var _q=null;
 function st(msg){
   var el=document.getElementById('toast');
-  document.getElementById('ttx').textContent=msg||'已保存';
+  document.getElementById('ttx').textContent=msg||"\u5DF2\u4FDD\u5B58";
   el.classList.add('show');
   if(_q)clearTimeout(_q);
   _q=setTimeout(function(){el.classList.remove('show')},1300);
 }
 
-// Auto save
 function as(){
   var key=dk(new Date()),data={};
   document.querySelectorAll('.task').forEach(function(t){data[t.dataset.id]=t.classList.contains('done')});
@@ -282,13 +286,11 @@ function as(){
   rw();us();st();
 }
 
-// Toggle task
 function tg(el,chk){
   el.querySelector('.chk').classList.toggle('on',chk);
   el.classList.toggle('done',chk);ua();as();
 }
 
-// Click handlers
 document.querySelectorAll('.task').forEach(function(el){
   el.addEventListener('click',function(e){
     if(e.target.closest('.bili')||e.target.closest('.tmr'))return;
@@ -296,12 +298,11 @@ document.querySelectorAll('.task').forEach(function(el){
   });
 });
 
-// Timer
 var _h={};
 function timer(btn){
   var row=btn.closest('.task'),total=parseInt(row.dataset.time)*60,id=row.dataset.id;
   if(btn.dataset.r==='true'){
-    clearInterval(_h[id]?._h[id].iv);
+    clearInterval(_h[id].iv);
     btn.dataset.r='false';btn.classList.remove('run');
     btn.textContent='\u25B6 '+row.dataset.time;
     if(_h[id])_h[id].rem=parseInt(btn.dataset.rm);
@@ -315,16 +316,22 @@ function timer(btn){
     rem--;btn.dataset.rm=rem;up();
     if(rem<=0){
       clearInterval(_h[id].iv);btn.dataset.r='false';btn.classList.remove('run');
-      btn.textContent='\u2714 完成';tg(row,true);
+      btn.textContent='\u2714 \u5B8C\u6210';tg(row,true);
       try{var c=new(window.AudioContext||window.webkitAudioContext)();var o=c.createOscillator();var g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.setValueAtTime(0.3,c.currentTime);o.start();setTimeout(function(){o.stop()},500);}catch(e){}
     }
   },1000)};
 }
 
-// Load saved
 (function(){
   var k=dk(new Date()),sv=localStorage.getItem('_d_'+k);
   if(sv){var data=JSON.parse(sv);document.querySelectorAll('.task').forEach(function(el){if(data[el.dataset.id]===true)tg(el,true)})}
   ua();rw();us();upReview();
 })();
-</script></body></html>
+
+\n// Pomodoro\nvar _po={on:false,iv:null,focus:25*60,brk:5*60,rem:25*60,rounds:0,isBrk:false};\nfunction togglePomo(){\n  var b=document.getElementById(\"pomoBtn\");\n  _po.on=!_po.on;\n  if(_po.on){_po.rem=_po.isBrk?_po.brk:_po.focus;b.textContent=\"\u23F1 \u8FD0\u884C\u4E2D\";b.style.background=\"var(--red)\";runPomo()}\n  else{clearInterval(_po.iv);b.textContent=\"\u25B6 \u5F00\u59CB\u756A\u8304\";b.style.background=\"\";}\n}\nfunction runPomo(){\n  clearInterval(_po.iv);\n  var b=document.getElementById(\"pomoBtn\"),i=document.getElementById(\"pomoInfo\");\n  _po.iv=setInterval(function(){\n    _po.rem--;var m=Math.floor(_po.rem/60),s=_po.rem%60;\n    if(_po.isBrk){i.textContent=\"\u1F4A4 \u4F11\u606F \"+m+\":\"+(s<10?\"0\":\"\")+s;b.textContent=\"\u23F1 \u4F11\u606F\u4E2D\"}\n    else{i.textContent=\"\u1F525 \u4E13\u6CE8 \"+m+\":\"+(s<10?\"0\":\"\")+s+\" | \u8F6E\u6B21:\"+_po.rounds;b.textContent=\"\u23F1 \u4E13\u6CE8\u4E2D\"}\n    if(_po.rem<=0){\n      _po.isBrk=!_po.isBrk;\n      if(_po.isBrk){_po.rem=_po.brk;i.textContent=\"\u1F4A4 \u4F11\u606F\u65F6\u95F4\uFF01\";_po.rounds++}\n      else{_po.rem=_po.focus;i.textContent=\"\u1F525 \u7EE7\u7EED\u4E13\u6CE8\uFF01\";}\n      try{var c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=_po.isBrk?440:880;g.gain.setValueAtTime(0.3,c.currentTime);o.start();setTimeout(function(){o.stop()},300)}catch(e){}\n    }\n  },1000);\n}\n\n// Bottom nav theme sync\nvar origTT=window.toggleTheme;\nwindow.toggleTheme=function(){\n  var d=document.body.classList.toggle(\"dark\");\n  localStorage.setItem(\"_t\",d?\"dark\":\"light\");\n  var ic=d?\"\u1F319\":\"\u2600\uFE0F\";\n  var t=document.getElementById(\"themeBtn\"),b=document.getElementById(\"bnTheme\");\n  if(t)t.textContent=ic;if(b)b.textContent=ic;\n};\n!function(){var ic=localStorage.getItem(\"_t\")===\"dark\"?\"\u1F319\":\"\u2600\uFE0F\";var b=document.getElementById(\"bnTheme\");if(b)b.textContent=ic}();\n\n// Error book\nfunction openErrModal(){document.getElementById(\"errModal\").classList.add(\"show\");renderErrs()}\nfunction closeErrModal(){document.getElementById(\"errModal\").classList.remove(\"show\")}\nfunction saveErr(){\n  var s=document.getElementById(\"errSubj\").value,c=document.getElementById(\"errCont\").value.trim();\n  if(!c)return;\n  var errs=JSON.parse(localStorage.getItem(\"_errs\")||\"[]\");\n  errs.push({subj:s,cont:c,date:new Date().toLocaleDateString()});\n  localStorage.setItem(\"_errs\",JSON.stringify(errs));\n  document.getElementById(\"errCont\").value=\"\";renderErrs();alert(\"\u5DF2\u4FDD\u5B58\");\n}\nfunction delErr(idx){\n  var errs=JSON.parse(localStorage.getItem(\"_errs\")||\"[]\");errs.splice(idx,1);\n  localStorage.setItem(\"_errs\",JSON.stringify(errs));renderErrs();\n}\nfunction renderErrs(){\n  var errs=JSON.parse(localStorage.getItem(\"_errs\")||\"[]\");\n  var el=document.getElementById(\"errList\");\n  el.innerHTML=errs.length===0?\"<div style=\"color:var(--sub);text-align:center;padding:12px\">\u6682\u65E0\u9519\u9898\u8BB0\u5F55</div>\":\n  errs.map(function(e,i){\n    return \"<div class=err-item><div class=inf><div class=sj>\"+e.subj+\" | \"+e.date+\"</div><div class=ct>\"+e.cont+\"</div></div><button class=del onclick=delErr(\"+i+\")>\u2715</button></div>\";\n  }).reverse().join(\"\");\n}\n\n// Formula modal\nfunction openFormula(){document.getElementById(\"fmModal\").classList.add(\"show\")}\nfunction closeFormula(){document.getElementById(\"fmModal\").classList.remove(\"show\")}\n</script><div class=bnav>
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})"><span class=ic>\u1F4C5</span>\u4ECA\u65E5</button>
+<button onclick="toggleTheme()"><span class=ic id=bnTheme>\u2600\uFE0F</span>\u4E3B\u9898</button>
+<button onclick="toggleRest()"><span class=ic>\u1F4A4</span>\u4F11\u606F</button>
+<button onclick="openErrModal()"><span class=ic>\u274C</span>\u9519\u9898</button>
+<button onclick="openFormula()"><span class=ic>\u1F4DA</span>\u516C\u5F0F</button></div>
+</body></html>
