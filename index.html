@@ -240,6 +240,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 /* nested details in tools panel */
 .tools-panel .tool-cat summary{font-size:12px;padding:10px 12px}
 
+
+/* tool card polish */
+.in-tool{border-radius:10px;margin-bottom:6px;box-shadow:0 1px 6px rgba(0,0,0,.04)}
+.in-tool-hdr{padding:11px 14px;font-size:13px;gap:8px}
+.in-tool-bd{padding:0 14px 12px}
+.in-tool-bd input,.in-tool-bd textarea{padding:10px 12px!important;font-size:14px!important;border-radius:8px!important;min-height:40px}
+.in-tool-bd button{padding:10px 16px!important;font-size:13px!important;border-radius:8px!important;min-height:40px;transition:all .15s}
+.in-tool-bd button:hover{opacity:.85;transform:translateY(-1px)}
+.in-tool-bd button:active{transform:scale(.97)}
+/* fixed height scroll for long tool content */
+.in-tool-bd{max-height:260px;overflow-y:auto}
+/* chapter buttons */
+.mcq-ch-btn.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
+.mcq-ch-btn:hover{background:var(--card-hover)}
+/* unified scrollbar */
+.in-tool-bd::-webkit-scrollbar{width:4px}
+.in-tool-bd::-webkit-scrollbar-thumb{background:var(--chk-border);border-radius:2px}
+/* tool section divider */
+.inline-tools .tool-cat[open]{border-color:rgba(124,109,240,.15)}
+
 </style>
 
 
@@ -332,6 +352,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 <div class=in-tool>
 <div class=in-tool-hdr onclick="this.parentElement.querySelector('.in-tool-bd').classList.toggle('show')">🔊 文本朗读工具 <span class=in-tool-arr>▶</span></div>
 <div class=in-tool-bd>
+<div style="font-size:10px;color:var(--sub);margin-bottom:4px">粘贴或输入英文 → 点击朗读按钮发音 · 离线可用</div>
 <textarea id=ttsText placeholder="输入英文文本，点击朗读..." style="width:100%;border:1px solid var(--chk-border);border-radius:8px;padding:8px;font-size:13px;background:var(--card-bg);color:var(--text);outline:none;resize:vertical;min-height:50px;font-family:inherit"></textarea>
 <div style="display:flex;gap:6px;margin-top:6px">
 <button onclick=ttsSpeak() style="flex:1;padding:8px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">▶ 朗读</button>
@@ -343,7 +364,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 <div class=in-tool>
 <div class=in-tool-hdr onclick="this.parentElement.querySelector('.in-tool-bd').classList.toggle('show')">🎙 音标速查 <span class=in-tool-arr>▶</span></div>
 <div class=in-tool-bd>
-<input id=ipaIpt placeholder="输入英文单词查音标..." style="width:100%;border:1px solid var(--chk-border);border-radius:8px;padding:8px;font-size:13px;background:var(--card-bg);color:var(--text);outline:none;font-family:inherit" onkeypress="if(event.keyCode===13)ipaLk()">
+<input id=ipaIpt placeholder="输入英文单词查音标...（支持任意单词，未收录自动近似）" style="width:100%;border:1px solid var(--chk-border);border-radius:8px;padding:8px;font-size:13px;background:var(--card-bg);color:var(--text);outline:none;font-family:inherit" onkeypress="if(event.keyCode===13)ipaLk()">
+<div <div style="font-size:10px;color:var(--sub);margin-bottom:2px">输入单词→查询，已收录400+词，其余规则生成</div>
 <div id=ipaOut style="margin-top:6px;font-size:16px;color:var(--accent);text-align:center;min-height:24px;font-weight:600"></div>
 <button onclick=ipaLk() style="width:100%;margin-top:4px;padding:6px;background:var(--btn-bg);border:1px solid var(--card-border);border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit">查询</button>
 </div>
@@ -352,7 +374,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 <div class=in-tool-hdr onclick="this.parentElement.querySelector('.in-tool-bd').classList.toggle('show')">🧮 数学运算器 <span class=in-tool-arr>▶</span></div>
 <div class=in-tool-bd>
 <div style="display:flex;gap:6px;margin:4px 0">
-<input id=calcIpt placeholder="例: 2+3*4, sqrt(16)" style="flex:1;border:1px solid var(--chk-border);border-radius:8px;padding:8px;font-size:14px;background:var(--card-bg);color:var(--text);outline:none;font-family:monospace" onkeypress="if(event.keyCode===13)clcDo()">
+<input id=calcIpt placeholder="输入表达式按=或回车计算 · 例: 2+3*4, sqrt(16), sin(PI/2)" style="flex:1;border:1px solid var(--chk-border);border-radius:8px;padding:8px;font-size:14px;background:var(--card-bg);color:var(--text);outline:none;font-family:monospace" onkeypress="if(event.keyCode===13)clcDo()">
 <button onclick=clcDo() style="padding:8px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">=</button>
 </div>
 <div id=calcOut style="text-align:center;font-size:18px;font-weight:700;color:var(--accent);min-height:24px"></div>
@@ -362,7 +384,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 <div class=in-tool>
 <div class=in-tool-hdr onclick="this.parentElement.querySelector('.in-tool-bd').classList.toggle('show')">📚 公式速查 <span class=in-tool-arr>▶</span></div>
 <div class=in-tool-bd>
-<input id=fmSrch placeholder="搜索公式... (导数/积分/极限/三角)" style="width:100%;border:1px solid var(--chk-border);border-radius:8px;padding:8px;font-size:13px;background:var(--card-bg);color:var(--text);outline:none;font-family:inherit" oninput=fmSearch()>
+<input id=fmSrch placeholder="搜索公式... 如：导数/积分/极限/三角" style="width:100%;border:1px solid var(--chk-border);border-radius:8px;padding:8px;font-size:13px;background:var(--card-bg);color:var(--text);outline:none;font-family:inherit" oninput=fmSearch()>
+<div <div style="font-size:10px;color:var(--sub);margin-bottom:2px">输入关键词筛选 → 点击公式复制到剪贴板</div>
 <div id=fmList style="max-height:120px;overflow-y:auto;margin-top:4px"></div>
 <div style="margin-top:4px;font-size:11px;color:var(--sub)">点击公式自动复制到剪贴板</div>
 </div>
@@ -370,6 +393,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 <div class=in-tool>
 <div class=in-tool-hdr onclick="this.parentElement.querySelector('.in-tool-bd').classList.toggle('show')">💻 计算机自测 <span class=in-tool-arr>▶</span></div>
 <div class=in-tool-bd>
+<div style="display:flex;gap:4px;margin-bottom:6px;flex-wrap:wrap"><button class="mcq-ch-btn active" data-ch=base onclick=mcqSwitch('base') style="padding:4px 8px;border:1px solid var(--card-border);border-radius:6px;background:var(--btn-bg);color:var(--text);font-size:11px;cursor:pointer;font-family:inherit">基础</button><button class=mcq-ch-btn data-ch=os onclick=mcqSwitch('os') style="padding:4px 8px;border:1px solid var(--card-border);border-radius:6px;background:var(--btn-bg);color:var(--text);font-size:11px;cursor:pointer;font-family:inherit">操作系统</button><button class=mcq-ch-btn data-ch=net onclick=mcqSwitch('net') style="padding:4px 8px;border:1px solid var(--card-border);border-radius:6px;background:var(--btn-bg);color:var(--text);font-size:11px;cursor:pointer;font-family:inherit">网络</button><button class=mcq-ch-btn data-ch=db onclick=mcqSwitch('db') style="padding:4px 8px;border:1px solid var(--card-border);border-radius:6px;background:var(--btn-bg);color:var(--text);font-size:11px;cursor:pointer;font-family:inherit">数据库</button><button class=mcq-ch-btn data-ch=prog onclick=mcqSwitch('prog') style="padding:4px 8px;border:1px solid var(--card-border);border-radius:6px;background:var(--btn-bg);color:var(--text);font-size:11px;cursor:pointer;font-family:inherit">编程</button></div><div <div style="font-size:10px;color:var(--sub);margin-bottom:4px">选择题库→作答→自动判分，章节成绩独立统计</div>
 <div id=mcqQn style="font-size:14px;font-weight:600;color:var(--text);padding:6px 0"></div>
 <div id=mcqOps style="display:flex;flex-direction:column;gap:4px;margin:4px 0"></div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
@@ -730,25 +754,7 @@ function closeFormula(){document.getElementById('fmModal').classList.remove('sho
 // ===== INLINE TOOLS =====
 
 // Word quiz
-var _wqWords=[
-  {cn:'放弃',en:'abandon'},{cn:'吸收',en:'absorb'},{cn:'抽象的',en:'abstract'},
-  {cn:'学术的',en:'academic'},{cn:'进入',en:'access'},{cn:'账户',en:'account'},
-  {cn:'达成',en:'achieve'},{cn:'承认',en:'acknowledge'},{cn:'获得',en:'acquire'},
-  {cn:'适应',en:'adapt'},{cn:'足够的',en:'adequate'},{cn:'调整',en:'adjust'},
-  {cn:'钦佩',en:'admire'},{cn:'承认(错误)',en:'admit'},{cn:'采用',en:'adopt'},
-  {cn:'前进',en:'advance'},{cn:'冒险',en:'adventure'},{cn:'影响',en:'affect'},
-  {cn:'负担得起',en:'afford'},{cn:'同意',en:'agree'},{cn:'允许',en:'allow'},
-  {cn:'古代的',en:'ancient'},{cn:'出现',en:'appear'},{cn:'申请',en:'apply'},
-  {cn:'方法',en:'approach'},{cn:'争论',en:'argue'},{cn:'安排',en:'arrange'},
-  {cn:'方面',en:'aspect'},{cn:'评估',en:'assess'},{cn:'假设',en:'assume'},
-  {cn:'气氛',en:'atmosphere'},{cn:'态度',en:'attitude'},{cn:'吸引',en:'attract'},
-  {cn:'可用的',en:'available'},{cn:'平均',en:'average'},{cn:'避免',en:'avoid'},
-  {cn:'行为',en:'behavior'},{cn:'相信',en:'believe'},{cn:'利益',en:'benefit'},
-  {cn:'呼吸',en:'breathe'},{cn:'建造',en:'build'},{cn:'商业',en:'business'},
-  {cn:'能力',en:'capacity'},{cn:'职业',en:'career'},{cn:'原因',en:'cause'},
-  {cn:'庆祝',en:'celebrate'},{cn:'挑战',en:'challenge'},{cn:'特征',en:'character'},
-  {cn:'选择',en:'choose'},{cn:'环境',en:'circumstance'}
-];
+var _wqWords=[{cn:'放弃',en:'abandon'},{cn:'吸收',en:'absorb'},{cn:'抽象的',en:'abstract'},{cn:'学术的',en:'academic'},{cn:'进入',en:'access'},{cn:'账户',en:'account'},{cn:'达成',en:'achieve'},{cn:'承认',en:'acknowledge'},{cn:'获得',en:'acquire'},{cn:'适应',en:'adapt'},{cn:'足够的',en:'adequate'},{cn:'调整',en:'adjust'},{cn:'钦佩',en:'admire'},{cn:'承认(错)',en:'admit'},{cn:'采用',en:'adopt'},{cn:'前进',en:'advance'},{cn:'冒险',en:'adventure'},{cn:'影响',en:'affect'},{cn:'负担得起',en:'afford'},{cn:'同意',en:'agree'},{cn:'允许',en:'allow'},{cn:'古代的',en:'ancient'},{cn:'出现',en:'appear'},{cn:'申请',en:'apply'},{cn:'方法',en:'approach'},{cn:'争论',en:'argue'},{cn:'安排',en:'arrange'},{cn:'方面',en:'aspect'},{cn:'评估',en:'assess'},{cn:'假设',en:'assume'},{cn:'气氛',en:'atmosphere'},{cn:'态度',en:'attitude'},{cn:'吸引',en:'attract'},{cn:'可用的',en:'available'},{cn:'平均',en:'average'},{cn:'避免',en:'avoid'},{cn:'行为',en:'behavior'},{cn:'相信',en:'believe'},{cn:'利益',en:'benefit'},{cn:'呼吸',en:'breathe'},{cn:'建造',en:'build'},{cn:'商业',en:'business'},{cn:'能力',en:'capacity'},{cn:'职业',en:'career'},{cn:'原因',en:'cause'},{cn:'庆祝',en:'celebrate'},{cn:'挑战',en:'challenge'},{cn:'特征',en:'character'},{cn:'选择',en:'choose'},{cn:'环境',en:'circumstance'},{cn:'交流',en:'communicate'},{cn:'社区',en:'community'},{cn:'比较',en:'compare'},{cn:'竞争',en:'compete'},{cn:'完成',en:'complete'},{cn:'专注',en:'concentrate'},{cn:'条件',en:'condition'},{cn:'后果',en:'consequence'},{cn:'考虑',en:'consider'},{cn:'包含',en:'contain'},{cn:'继续',en:'continue'},{cn:'贡献',en:'contribute'},{cn:'说服',en:'convince'},{cn:'创造',en:'create'},{cn:'文化',en:'culture'},{cn:'决定',en:'decide'},{cn:'减少',en:'decrease'},{cn:'定义',en:'define'},{cn:'交付',en:'deliver'},{cn:'要求',en:'demand'},{cn:'依赖',en:'depend'},{cn:'描述',en:'describe'},{cn:'设计',en:'design'},{cn:'破坏',en:'destroy'},{cn:'决心',en:'determine'},{cn:'发展',en:'develop'},{cn:'发现',en:'discover'},{cn:'讨论',en:'discuss'},{cn:'经济',en:'economy'},{cn:'教育',en:'education'},{cn:'影响(名)',en:'effect'},{cn:'努力',en:'effort'},{cn:'鼓励',en:'encourage'},{cn:'环境(n)',en:'environment'},{cn:'建立',en:'establish'},{cn:'证据',en:'evidence'},{cn:'检查',en:'examine'},{cn:'例子',en:'example'},{cn:'存在',en:'exist'},{cn:'期待',en:'expect'},{cn:'经历',en:'experience'},{cn:'解释',en:'explain'},{cn:'表达',en:'express'},{cn:'熟悉的',en:'familiar'},{cn:'金融的',en:'financial'},{cn:'外国的',en:'foreign'},{cn:'政府',en:'government'},{cn:'毕业生',en:'graduate'},{cn:'识别',en:'identify'},{cn:'想象',en:'imagine'},{cn:'立即的',en:'immediate'},{cn:'重要的',en:'important'},{cn:'改善',en:'improve'},{cn:'包括',en:'include'},{cn:'增加',en:'increase'},{cn:'个人的',en:'individual'},{cn:'影响(动)',en:'influence'},{cn:'信息',en:'information'},{cn:'兴趣',en:'interest'},{cn:'国际的',en:'international'},{cn:'介绍',en:'introduce'},{cn:'知识',en:'knowledge'},{cn:'语言',en:'language'},{cn:'管理',en:'manage'},{cn:'材料',en:'material'},{cn:'测量',en:'measure'},{cn:'记忆',en:'memory'},{cn:'提及',en:'mention'},{cn:'方法',en:'method'},{cn:'自然的',en:'natural'},{cn:'必要的',en:'necessary'},{cn:'正常的',en:'normal'},{cn:'观察',en:'observe'},{cn:'获得',en:'obtain'},{cn:'明显的',en:'obvious'},{cn:'操作',en:'operate'},{cn:'观点',en:'opinion'},{cn:'机会',en:'opportunity'},{cn:'组织',en:'organize'},{cn:'特定的',en:'particular'},{cn:'表演',en:'perform'},{cn:'物理的',en:'physical'},{cn:'政策',en:'policy'},{cn:'流行的',en:'popular'},{cn:'位置',en:'position'},{cn:'可能的',en:'possible'},{cn:'练习',en:'practice'},{cn:'准备',en:'prepare'},{cn:'压力',en:'pressure'},{cn:'阻止',en:'prevent'},{cn:'过程',en:'process'},{cn:'生产',en:'produce'},{cn:'职业',en:'profession'},{cn:'项目',en:'project'},{cn:'承诺',en:'promise'},{cn:'保护',en:'protect'},{cn:'证明',en:'prove'},{cn:'提供',en:'provide'},{cn:'目的',en:'purpose'},{cn:'质量',en:'quality'},{cn:'意识到',en:'realize'},{cn:'收到',en:'receive'},{cn:'认出',en:'recognize'},{cn:'推荐',en:'recommend'},{cn:'记录',en:'record'},{cn:'减少',en:'reduce'},{cn:'反映',en:'reflect'},{cn:'看待',en:'regard'},{cn:'关联',en:'relate'},{cn:'保持',en:'remain'},{cn:'记得',en:'remember'},{cn:'移除',en:'remove'},{cn:'代表',en:'represent'},{cn:'要求',en:'require'},{cn:'研究',en:'research'},{cn:'资源',en:'resource'},{cn:'回应',en:'respond'},{cn:'结果',en:'result'},{cn:'满足',en:'satisfy'},{cn:'科学',en:'science'},{cn:'分开',en:'separate'},{cn:'严重的',en:'serious'},{cn:'服务',en:'service'},{cn:'几个',en:'several'},{cn:'相似的',en:'similar'},{cn:'情况',en:'situation'},{cn:'社会的',en:'social'},{cn:'社会',en:'society'},{cn:'解决方案',en:'solution'},{cn:'特殊的',en:'special'},{cn:'标准',en:'standard'},{cn:'策略',en:'strategy'},{cn:'奋斗',en:'struggle'},{cn:'成功',en:'succeed'},{cn:'遭受',en:'suffer'},{cn:'建议',en:'suggest'},{cn:'支持',en:'support'},{cn:'认为',en:'suppose'},{cn:'生存',en:'survive'},{cn:'系统',en:'system'},{cn:'技术',en:'technology'},{cn:'因此',en:'therefore'},{cn:'传统',en:'tradition'},{cn:'翻译',en:'translate'},{cn:'理解',en:'understand'},{cn:'大学',en:'university'},{cn:'多样性',en:'variety'},{cn:'各种各样的',en:'various'},{cn:'志愿者',en:'volunteer'},{cn:'缺席',en:'absence'},{cn:'绝对的',en:'absolute'},{cn:'滥用',en:'abuse'},{cn:'伴随',en:'accompany'},{cn:'准确',en:'accurate'},{cn:'实现',en:'accomplish'},{cn:'代理',en:'agency'},{cn:'农业',en:'agriculture'},{cn:'分析',en:'analyze'},{cn:'欣赏',en:'appreciate'},{cn:'批准',en:'approve'},{cn:'逮捕',en:'arrest'},{cn:'人工的',en:'artificial'},{cn:'分配',en:'assign'},{cn:'协助',en:'assist'},{cn:'联系',en:'associate'},{cn:'企图',en:'attempt'},{cn:'权威',en:'authority'},{cn:'平衡',en:'balance'},{cn:'障碍',en:'barrier'},{cn:'信仰',en:'belief'},{cn:'属于',en:'belong'},{cn:'预算',en:'budget'},{cn:'负担',en:'burden'},{cn:'战役',en:'campaign'},{cn:'候选人',en:'candidate'},{cn:'类别',en:'category'},{cn:'谨慎的',en:'cautious'},{cn:'频道',en:'channel'},{cn:'章节',en:'chapter'},{cn:'文明',en:'civilization'},{cn:'气候',en:'climate'},{cn:'同事',en:'colleague'},{cn:'结合',en:'combine'},{cn:'评论',en:'comment'},{cn:'商业的',en:'commercial'},{cn:'委员会',en:'committee'},{cn:'商品',en:'commodity'},{cn:'补偿',en:'compensate'},{cn:'复杂的',en:'complex'},{cn:'概念',en:'concept'},{cn:'关心',en:'concern'},{cn:'具体的',en:'concrete'},{cn:'信心',en:'confidence'},{cn:'确认',en:'confirm'},{cn:'冲突',en:'conflict'},{cn:'面对',en:'confront'},{cn:'连接',en:'connection'},{cn:'有意识的',en:'conscious'},{cn:'保守的',en:'conservative'},{cn:'建设',en:'construction'},{cn:'消费者',en:'consumer'},{cn:'当代的',en:'contemporary'},{cn:'合同',en:'contract'},{cn:'相反',en:'contrary'},{cn:'方便的',en:'convenient'},{cn:'传统的',en:'conventional'},{cn:'合作',en:'cooperate'},{cn:'核心',en:'core'},{cn:'纠正',en:'correct'},{cn:'勇气',en:'courage'},{cn:'犯罪',en:'crime'},{cn:'关键的',en:'critical'},{cn:'当前的',en:'current'},{cn:'债务',en:'debt'},{cn:'十年',en:'decade'},{cn:'宣布',en:'declare'},{cn:'防御',en:'defense'},{cn:'民主',en:'democracy'},{cn:'展示',en:'demonstrate'},{cn:'否认',en:'deny'},{cn:'部门',en:'department'},{cn:'沮丧',en:'depression'},{cn:'值得',en:'deserve'},{cn:'细节',en:'detail'},{cn:'决心(名)',en:'determination'},{cn:'设备',en:'device'},{cn:'数字的',en:'digital'},{cn:'消失',en:'disappear'},{cn:'灾难',en:'disaster'},{cn:'纪律',en:'discipline'},{cn:'疾病',en:'disease'},{cn:'解散',en:'dismiss'},{cn:'争端',en:'dispute'},{cn:'区别',en:'distinction'},{cn:'分发',en:'distribute'},{cn:'多样化的',en:'diverse'},{cn:'文件',en:'document'},{cn:'国内的',en:'domestic'},{cn:'支配',en:'dominate'},{cn:'捐赠',en:'donate'},{cn:'效率',en:'efficiency'},{cn:'选举',en:'election'},{cn:'元素',en:'element'},{cn:'消除',en:'eliminate'},{cn:'情感',en:'emotion'},{cn:'强调',en:'emphasis'},{cn:'雇佣',en:'employ'},{cn:'使能够',en:'enable'},{cn:'遇到',en:'encounter'},{cn:'精力',en:'energy'},{cn:'增强',en:'enhance'},{cn:'企业',en:'enterprise'},{cn:'娱乐',en:'entertainment'},{cn:'入口',en:'entrance'},{cn:'本质',en:'essence'},{cn:'进化',en:'evolution'},{cn:'执行',en:'execute'},{cn:'展览',en:'exhibition'},{cn:'扩张',en:'expansion'},{cn:'实验',en:'experiment'},{cn:'专家',en:'expert'},{cn:'探索',en:'explore'},{cn:'出口',en:'export'},{cn:'暴露',en:'exposure'},{cn:'非凡的',en:'extraordinary'},{cn:'极端的',en:'extreme'},{cn:'设施',en:'facility'},{cn:'因素',en:'factor'},{cn:'时尚',en:'fashion'},{cn:'联邦的',en:'federal'},{cn:'灵活的',en:'flexible'},{cn:'焦点',en:'focus'},{cn:'预测',en:'forecast'},{cn:'频率',en:'frequency'},{cn:'功能',en:'function'},{cn:'基础的',en:'fundamental'},{cn:'一代',en:'generation'},{cn:'慷慨的',en:'generous'},{cn:'真正的',en:'genuine'},{cn:'全球的',en:'global'},{cn:'保证',en:'guarantee'},{cn:'和谐',en:'harmony'},{cn:'敌对的',en:'hostile'},{cn:'谦虚的',en:'humble'},{cn:'忽视',en:'ignore'},{cn:'移民',en:'immigrant'},{cn:'收入',en:'income'},{cn:'独立',en:'independence'},{cn:'工业',en:'industry'},{cn:'最初的',en:'initial'},{cn:'创新',en:'innovation'},{cn:'灵感',en:'inspiration'},{cn:'机构',en:'institution'},{cn:'工具',en:'instrument'},{cn:'保险',en:'insurance'},{cn:'智力',en:'intelligence'},{cn:'密集的',en:'intense'},{cn:'投资',en:'invest'},{cn:'调查',en:'investigate'},{cn:'问题',en:'issue'},{cn:'正义',en:'justice'},{cn:'景观',en:'landscape'},{cn:'发射',en:'launch'},{cn:'合法的',en:'legitimate'},{cn:'有限的',en:'limited'},{cn:'维持',en:'maintain'},{cn:'多数',en:'majority'},{cn:'制造',en:'manufacture'},{cn:'市场',en:'market'},{cn:'婚姻',en:'marriage'},{cn:'巨大的',en:'massive'},{cn:'机制',en:'mechanism'},{cn:'心理的',en:'mental'},{cn:'军队的',en:'military'},{cn:'少数',en:'minority'},{cn:'使命',en:'mission'},{cn:'监控',en:'monitor'},{cn:'情绪',en:'mood'},{cn:'道德',en:'moral'},{cn:'动机',en:'motive'},{cn:'相互的',en:'mutual'},{cn:'消极的',en:'negative'},{cn:'网络',en:'network'},{cn:'无数的',en:'numerous'},{cn:'发生',en:'occur'},{cn:'官员',en:'official'},{cn:'操作(名)',en:'operation'},{cn:'对手',en:'opponent'},{cn:'反对',en:'oppose'},{cn:'乐观的',en:'optimistic'},{cn:'选项',en:'option'},{cn:'起源',en:'origin'},{cn:'否则',en:'otherwise'},{cn:'结果(名)',en:'outcome'},{cn:'克服',en:'overcome'},{cn:'参与',en:'participate'},{cn:'激情',en:'passion'},{cn:'模式',en:'pattern'},{cn:'和平',en:'peace'},{cn:'惩罚',en:'penalty'},{cn:'感知',en:'perceive'},{cn:'时期',en:'period'},{cn:'永久的',en:'permanent'},{cn:'坚持',en:'persist'},{cn:'个性',en:'personality'},{cn:'视角',en:'perspective'},{cn:'现象',en:'phenomenon'},{cn:'哲学',en:'philosophy'},{cn:'政治',en:'politics'},{cn:'污染',en:'pollution'},{cn:'人口',en:'population'},{cn:'拥有',en:'possess'},{cn:'潜在的',en:'potential'},{cn:'贫穷',en:'poverty'},{cn:'宝贵的',en:'precious'},{cn:'预测(动)',en:'predict'},{cn:'保存',en:'preserve'},{cn:'先前的',en:'previous'},{cn:'原则',en:'principle'},{cn:'优先',en:'priority'},{cn:'隐私',en:'privacy'},{cn:'程序',en:'procedure'},{cn:'利润',en:'profit'},{cn:'进步的',en:'progressive'},{cn:'禁止',en:'prohibit'},{cn:'前景',en:'prospect'},{cn:'抗议',en:'protest'},{cn:'追求',en:'pursue'},{cn:'合格的',en:'qualified'},{cn:'范围',en:'range'},{cn:'快速的',en:'rapid'},{cn:'反应',en:'reaction'},{cn:'合理的',en:'reasonable'},{cn:'恢复',en:'recovery'},{cn:'改革',en:'reform'},{cn:'地区',en:'region'},{cn:'注册',en:'register'},{cn:'拒绝',en:'reject'},{cn:'释放',en:'release'},{cn:'可靠的',en:'reliable'},{cn:'宗教',en:'religion'},{cn:'依靠',en:'rely'},{cn:'显著的',en:'remarkable'},{cn:'代替',en:'replace'},{cn:'声誉',en:'reputation'},{cn:'请求',en:'request'},{cn:'辞职',en:'resign'},{cn:'解决',en:'resolve'},{cn:'限制',en:'restrict'},{cn:'收入',en:'revenue'},{cn:'革命',en:'revolution'},{cn:'牺牲',en:'sacrifice'},{cn:'安全',en:'security'},{cn:'信号',en:'signal'},{cn:'意义',en:'significance'},{cn:'来源',en:'source'},{cn:'具体的',en:'specific'},{cn:'精神',en:'spirit'},{cn:'稳定',en:'stability'},{cn:'统计',en:'statistics'},{cn:'地位',en:'status'},{cn:'刺激',en:'stimulate'},{cn:'结构',en:'structure'},{cn:'充足的',en:'sufficient'},{cn:'调查(名)',en:'survey'},{cn:'生存(动)',en:'survive'},{cn:'嫌疑',en:'suspicion'},{cn:'符号',en:'symbol'},{cn:'同情',en:'sympathy'},{cn:'战术',en:'tactic'},{cn:'倾向',en:'tendency'},{cn:'领土',en:'territory'},{cn:'理论',en:'theory'},{cn:'威胁',en:'threat'},{cn:'悲剧',en:'tragedy'},{cn:'交易',en:'transaction'},{cn:'转变',en:'transform'},{cn:'趋势',en:'trend'},{cn:'独特的',en:'unique'},{cn:'宇宙',en:'universe'},{cn:'城市的',en:'urban'},{cn:'紧急',en:'urgency'},{cn:'有效的',en:'valid'},{cn:'消失',en:'vanish'},{cn:'巨大的',en:'vast'},{cn:'受害者',en:'victim'},{cn:'暴力的',en:'violent'},{cn:'美德',en:'virtue'},{cn:'可见的',en:'visible'},{cn:'视力',en:'vision'},{cn:'财富',en:'wealth'},{cn:'福利',en:'welfare'},{cn:'智慧',en:'wisdom'},{cn:'见证',en:'witness'},{cn:'产量',en:'yield'}];
 var _wqIdx=-1,_wqTotal=0,_wqRight=0;
 function wqStart(){
   _wqTotal=0;_wqRight=0;
@@ -775,12 +781,12 @@ function wqCheck(){
     _wqRight++;
     document.getElementById('wqHint').textContent='正确! '+w.en;
     document.getElementById('wqHint').style.color='var(--green)';
-    document.getElementById('wqScore').textContent=_wqRight+'/'+_wqTotal;
+    document.getElementById('wqScore').textContent=_wqRight+'/'+_wqTotal+' | 生词:'+_wqWrong.length;
     setTimeout(wqNext,800);
   }else{
-    document.getElementById('wqHint').innerHTML='错误! 答案是 <b>'+w.en+'</b>';
+    document.getElementById('wqHint').innerHTML='错误! 答案是 <b>'+w.en+'</b>';if(_wqWrong.indexOf(w.cn)<0){_wqWrong.push(w.cn);try{localStorage.setItem('_wqWrong',JSON.stringify(_wqWrong))}catch(e){}}
     document.getElementById('wqHint').style.color='var(--red)';
-    document.getElementById('wqScore').textContent=_wqRight+'/'+_wqTotal;
+    document.getElementById('wqScore').textContent=_wqRight+'/'+_wqTotal+' | 生词:'+_wqWrong.length;
   }
 }
 function wqSkip(){
@@ -788,7 +794,7 @@ function wqSkip(){
   if(w)document.getElementById('wqHint').innerHTML='答案: <b>'+w.en+'</b>';
   _wqTotal++;
   document.getElementById('wqHint').style.color='var(--sub)';
-  document.getElementById('wqScore').textContent=_wqRight+'/'+_wqTotal;
+  document.getElementById('wqScore').textContent=_wqRight+'/'+_wqTotal+' | 生词:'+_wqWrong.length;
   setTimeout(wqNext,600);
 }
 
@@ -910,7 +916,7 @@ function ipaLk(){
   var out=document.getElementById('ipaOut');
   if(!w){out.textContent='请输入单词';return}
   if(_ipaMap[w]){out.textContent='/'+_ipaMap[w]+'/';out.style.color='var(--accent)'}
-  else{out.textContent='未找到该单词的音标';out.style.color='var(--sub)'}
+  else{var ipa=w.replace(/tion/g,'ʃən').replace(/sion/g,'ʒən').replace(/ture/g,'tʃər').replace(/ph/g,'f').replace(/gh$/g,'').replace(/ee/g,'i:').replace(/ea/g,'i:').replace(/oo/g,'u:').replace(/th/g,'θ').replace(/ch/g,'tʃ').replace(/sh/g,'ʃ').replace(/qu/g,'kw').replace(/ck/g,'k').replace(/wh/g,'w');out.textContent='/'+ipa+'/ (近似)';out.style.color='var(--sub)'}
 }
 
 // Calculator (safe eval)
@@ -964,18 +970,13 @@ function fmSearch(){
 fmSearch(); // init
 
 // Computer MCQ
-var _mcqQ=[
-  {q:'1 Byte = ?',o:['8 bit','16 bit','32 bit','64 bit'],a:0},
-  {q:'CPU的中文名称是？',o:['内存','中央处理器','硬盘','显卡'],a:1},
-  {q:'二进制 1010 转十进制是？',o:['8','9','10','11'],a:2},
-  {q:'操作系统的核心是？',o:['应用程序','文件系统','内核','浏览器'],a:2},
-  {q:'HTTP 的默认端口是？',o:['21','22','80','443'],a:2},
-  {q:'RAM 是什么存储器？',o:['只读存储器','随机存取存储器','硬盘存储','光盘存储'],a:1},
-  {q:'下列哪个是输出设备？',o:['键盘','鼠标','扫描仪','显示器'],a:3},
-  {q:'IP地址分为哪两个版本？',o:['IPv4和IPv6','IPv1和IPv2','IPv3和IPv4','IPv5和IPv6'],a:0},
-  {q:'数据库查询语言是？',o:['HTML','CSS','SQL','PHP'],a:2},
-  {q:'下列哪个不是编程语言？',o:['Python','Java','HTTP','C++'],a:2},
-];
+var _mcqChapters={base:[{q:'1 Byte = ?',o:['8 bit','16 bit','32 bit','64 bit'],a:0},{q:'二进制 1010 转十进制是？',o:['8','9','10','11'],a:2},{q:'下列哪个是输出设备？',o:['键盘','鼠标','扫描仪','显示器'],a:3},{q:'RAM 是什么存储器？',o:['只读存储器','随机存取存储器','硬盘存储','光盘存储'],a:1}],os:[{q:'操作系统的核心是？',o:['应用程序','文件系统','内核','浏览器'],a:2},{q:'下列哪个不是操作系统？',o:['Windows','Linux','Python','macOS'],a:2}],net:[{q:'HTTP 的默认端口是？',o:['21','22','80','443'],a:2},{q:'IP地址分为哪两个版本？',o:['IPv4和IPv6','IPv1和IPv2','IPv3和IPv4','IPv5和IPv6'],a:0},{q:'DNS 的作用是？',o:['加密数据','域名解析为IP','存储文件','发送邮件'],a:1}],db:[{q:'数据库查询语言是？',o:['HTML','CSS','SQL','PHP'],a:2},{q:'关系型数据库是？',o:['MongoDB','MySQL','Redis','Cassandra'],a:1}],prog:[{q:'下列哪个不是编程语言？',o:['Python','Java','HTTP','C++'],a:2},{q:'面向对象三大特性不包括？',o:['封装','继承','多态','递归'],a:3}]};var _mcqCh='base',_mcqQ=_mcqChapters['base'];
+function mcqSwitch(ch){
+  _mcqCh=ch;_mcqQ=_mcqChapters[ch];_mcqCurr=-1;_mcqRight=0;_mcqTotal=0;
+  document.querySelectorAll('.mcq-ch-btn').forEach(function(b){b.classList.toggle('active',b.dataset.ch===ch)});
+  mcqNext();
+}
+
 var _mcqCurr=-1,_mcqRight=0,_mcqTotal=0;
 function mcqNext(){
   _mcqCurr=(_mcqCurr+1)%_mcqQ.length;
