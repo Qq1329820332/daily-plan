@@ -222,6 +222,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 .tool-link span{font-size:11px;color:var(--sub);margin-left:auto;flex-shrink:0;text-overflow:ellipsis;overflow:hidden}
 .tool-link:hover{background:var(--card-hover);color:var(--accent);text-decoration:underline;text-underline-offset:3px}
 .tool-link:hover span{color:var(--accent)}
+
+/* inline tools */
+.inline-tools{margin-bottom:0}
+.in-tool{border:1px solid var(--card-border);border-radius:10px;margin-bottom:4px;background:var(--card-bg);backdrop-filter:blur(6px) saturate(120%);-webkit-backdrop-filter:blur(6px) saturate(120%);overflow:hidden}
+.in-tool-hdr{padding:10px 12px;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:6px;user-select:none}
+.in-tool-hdr:hover{color:var(--accent)}
+.in-tool-arr{font-size:9px;margin-left:auto;transition:transform .2s;color:var(--sub)}
+.in-tool-bd{display:none;padding:0 12px 10px}
+.in-tool-bd.show{display:block}
+.in-tool-bd input,.in-tool-bd textarea{font-family:inherit!important}
+/* MCQ options */
+.mcq-opt{display:block;width:100%;padding:8px 12px;border:1px solid var(--card-border);border-radius:8px;background:var(--btn-bg);color:var(--text);font-size:13px;text-align:left;cursor:pointer;font-family:inherit;transition:all .15s}
+.mcq-opt:hover{background:var(--card-hover);border-color:var(--accent)}
+.mcq-opt.correct{background:rgba(107,203,170,.2);border-color:var(--green);color:var(--green)}
+.mcq-opt.wrong{background:rgba(240,106,106,.15);border-color:var(--red);color:var(--red)}
+/* nested details in tools panel */
+.tools-panel .tool-cat summary{font-size:12px;padding:10px 12px}
+
 </style>
 
 
@@ -290,57 +308,134 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 <div class=tail><span class=dur>15</span></div></div></div><div class=addtask><input id=add附加 placeholder="+ 添加自定义任务..." onkeypress="if(event.keyCode===13)addCustom('附加')"><button onclick=addCustom('附加')>添加</button></div><div class=section></div>
 </div>
 <div class="tab-panel" id=tab-errors>
-<div class=section-title><span>🧰 学习工具</span><span class=line></span><span class="pill pill-blu">辅助</span></div>
+<div class=section-title><span>🧰 学习工具</span><span class=line></span><span class="pill pill-blu">工具箱</span></div>
+<div class=inline-tools>
+<details class=tool-cat>
+<summary>🛠 内置工具 · 离线可用</summary>
+<div class=tool-links>
+<div class=in-tool>
+<div class=in-tool-hdr onclick="this.parentElement.querySelector('.in-tool-bd').classList.toggle('show')">📝 单词默写自测 <span class=in-tool-arr>▶</span></div>
+<div class=in-tool-bd>
+<div style="text-align:center;padding:8px 0" id=wqScore>准备开始</div>
+<div style="text-align:center;font-size:20px;font-weight:700;padding:6px;color:var(--accent)" id=wqCn>点击开始</div>
+<div style="display:flex;gap:6px;margin:6px 0">
+<input id=wqInput placeholder="输入英文单词..." style="flex:1;border:1px solid var(--chk-border);border-radius:8px;padding:8px 10px;font-size:14px;background:var(--card-bg);color:var(--text);outline:none" onkeypress="if(event.keyCode===13)wqCheck()">
+<button onclick=wqCheck() style="padding:8px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">检查</button>
+</div>
+<div style="display:flex;gap:6px;justify-content:center">
+<button onclick=wqStart() style="padding:6px 12px;background:var(--btn-bg);border:1px solid var(--card-border);border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit">新题</button>
+<button onclick=wqSkip() style="padding:6px 12px;background:var(--btn-bg);border:1px solid var(--card-border);border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit">跳过</button>
+</div>
+<div id=wqHint style="text-align:center;font-size:12px;color:var(--sub);margin-top:4px"></div>
+</div>
+</div>
+<div class=in-tool>
+<div class=in-tool-hdr onclick="this.parentElement.querySelector('.in-tool-bd').classList.toggle('show')">🔊 文本朗读工具 <span class=in-tool-arr>▶</span></div>
+<div class=in-tool-bd>
+<textarea id=ttsText placeholder="输入英文文本，点击朗读..." style="width:100%;border:1px solid var(--chk-border);border-radius:8px;padding:8px;font-size:13px;background:var(--card-bg);color:var(--text);outline:none;resize:vertical;min-height:50px;font-family:inherit"></textarea>
+<div style="display:flex;gap:6px;margin-top:6px">
+<button onclick=ttsSpeak() style="flex:1;padding:8px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">▶ 朗读</button>
+<button onclick=ttsStop() style="padding:8px 14px;background:var(--btn-bg);border:1px solid var(--card-border);border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit">⏹ 停止</button>
+</div>
+<div style="margin-top:4px;font-size:11px;color:var(--sub)">使用浏览器语音引擎，离线可用</div>
+</div>
+</div>
+<div class=in-tool>
+<div class=in-tool-hdr onclick="this.parentElement.querySelector('.in-tool-bd').classList.toggle('show')">🎙 音标速查 <span class=in-tool-arr>▶</span></div>
+<div class=in-tool-bd>
+<input id=ipaIpt placeholder="输入英文单词查音标..." style="width:100%;border:1px solid var(--chk-border);border-radius:8px;padding:8px;font-size:13px;background:var(--card-bg);color:var(--text);outline:none;font-family:inherit" onkeypress="if(event.keyCode===13)ipaLk()">
+<div id=ipaOut style="margin-top:6px;font-size:16px;color:var(--accent);text-align:center;min-height:24px;font-weight:600"></div>
+<button onclick=ipaLk() style="width:100%;margin-top:4px;padding:6px;background:var(--btn-bg);border:1px solid var(--card-border);border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit">查询</button>
+</div>
+</div>
+<div class=in-tool>
+<div class=in-tool-hdr onclick="this.parentElement.querySelector('.in-tool-bd').classList.toggle('show')">🧮 数学运算器 <span class=in-tool-arr>▶</span></div>
+<div class=in-tool-bd>
+<div style="display:flex;gap:6px;margin:4px 0">
+<input id=calcIpt placeholder="例: 2+3*4, sqrt(16)" style="flex:1;border:1px solid var(--chk-border);border-radius:8px;padding:8px;font-size:14px;background:var(--card-bg);color:var(--text);outline:none;font-family:monospace" onkeypress="if(event.keyCode===13)clcDo()">
+<button onclick=clcDo() style="padding:8px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">=</button>
+</div>
+<div id=calcOut style="text-align:center;font-size:18px;font-weight:700;color:var(--accent);min-height:24px"></div>
+<div style="font-size:11px;color:var(--sub);margin-top:4px">支持 + - * / () sqrt sin cos tan PI E ln log abs</div>
+</div>
+</div>
+<div class=in-tool>
+<div class=in-tool-hdr onclick="this.parentElement.querySelector('.in-tool-bd').classList.toggle('show')">📚 公式速查 <span class=in-tool-arr>▶</span></div>
+<div class=in-tool-bd>
+<input id=fmSrch placeholder="搜索公式... (导数/积分/极限/三角)" style="width:100%;border:1px solid var(--chk-border);border-radius:8px;padding:8px;font-size:13px;background:var(--card-bg);color:var(--text);outline:none;font-family:inherit" oninput=fmSearch()>
+<div id=fmList style="max-height:120px;overflow-y:auto;margin-top:4px"></div>
+<div style="margin-top:4px;font-size:11px;color:var(--sub)">点击公式自动复制到剪贴板</div>
+</div>
+</div>
+<div class=in-tool>
+<div class=in-tool-hdr onclick="this.parentElement.querySelector('.in-tool-bd').classList.toggle('show')">💻 计算机自测 <span class=in-tool-arr>▶</span></div>
+<div class=in-tool-bd>
+<div id=mcqQn style="font-size:14px;font-weight:600;color:var(--text);padding:6px 0"></div>
+<div id=mcqOps style="display:flex;flex-direction:column;gap:4px;margin:4px 0"></div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+<span id=mcqScore style="font-size:12px;color:var(--sub)"></span>
+<button onclick=mcqNext() style="padding:6px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">下一题</button>
+</div>
+</div>
+</div>
+</div>
+</details>
+</div>
 <div class=tools-panel>
 <details class=tool-cat>
+<summary>🌐 外部资源 · ⚠跳转第三方网页</summary>
+<div class=tool-links>
+<details class=tool-cat style="margin:0;border:none;background:none;backdrop-filter:none;-webkit-backdrop-filter:none">
 <summary>🇬🇧 英语学习</summary>
 <div class=tool-links>
-<a class=tool-link href=https://keykey.cc/word-practice/session target=_blank rel=noopener>⌨ KeyKey 打字练单词 <span>边打字边记专升本词汇</span></a>
-<a class=tool-link href=https://ipachart.app/zh-CN target=_blank rel=noopener>🎵 IPA 交互音标表 <span>点击音标听发音</span></a>
-<a class=tool-link href=https://dict.eudic.net/ target=_blank rel=noopener>📖 欧路词典 <span>权威中英查词，支持发音</span></a>
-<a class=tool-link href=https://fanyi.baidu.com/ target=_blank rel=noopener>🇨🇳 百度翻译 <span>段落翻译，适合阅读理解</span></a>
-<a class=tool-link href=https://www.deepl.com/translator target=_blank rel=noopener>🌐 DeepL 翻译 <span>全球最准AI翻译引擎</span></a>
+<a class=tool-link href=https://keykey.cc/word-practice/session target=_blank rel=noopener>⌨ KeyKey 打字练单词 <span>⚠跳转</span></a>
+<a class=tool-link href=https://ipachart.app/zh-CN target=_blank rel=noopener>🎵 IPA 交互音标表 <span>⚠跳转</span></a>
+<a class=tool-link href=https://dict.eudic.net/ target=_blank rel=noopener>📖 欧路词典 <span>⚠跳转</span></a>
+<a class=tool-link href=https://fanyi.baidu.com/ target=_blank rel=noopener>🇨🇳 百度翻译 <span>⚠跳转</span></a>
+<a class=tool-link href=https://www.deepl.com/translator target=_blank rel=noopener>🌐 DeepL 翻译 <span>⚠跳转</span></a>
 </div>
 </details>
-<details class=tool-cat>
+<details class=tool-cat style="margin:0;border:none;background:none;backdrop-filter:none;-webkit-backdrop-filter:none">
 <summary>🔢 高等数学</summary>
 <div class=tool-links>
-<a class=tool-link href=https://www.wolframalpha.com/ target=_blank rel=noopener>🧮 Wolfram Alpha <span>数学公式计算、画图、求导</span></a>
-<a class=tool-link href=https://www.desmos.com/calculator?lang=zh-CN target=_blank rel=noopener>📈 Desmos 图形计算器 <span>函数可视化，直观理解</span></a>
-<a class=tool-link href=https://www.bilibili.com/video/BV1swAWerEzS target=_blank rel=noopener>📺 B站高数系统课 <span>专升本高数全套视频</span></a>
-<a class=tool-link href=https://space.bilibili.com/88461692 target=_blank rel=noopener>🎬 3Blue1Brown <span>数学直觉动画，B站官方号</span></a>
+<a class=tool-link href=https://www.wolframalpha.com/ target=_blank rel=noopener>🧮 Wolfram Alpha <span>⚠跳转</span></a>
+<a class=tool-link href=https://www.desmos.com/calculator?lang=zh-CN target=_blank rel=noopener>📈 Desmos 图形计算器 <span>⚠跳转</span></a>
+<a class=tool-link href=https://www.bilibili.com/video/BV1swAWerEzS target=_blank rel=noopener>📺 B站高数系统课 <span>⚠跳转</span></a>
+<a class=tool-link href=https://space.bilibili.com/88461692 target=_blank rel=noopener>🎬 3Blue1Brown <span>⚠跳转</span></a>
 </div>
 </details>
-<details class=tool-cat>
+<details class=tool-cat style="margin:0;border:none;background:none;backdrop-filter:none;-webkit-backdrop-filter:none">
 <summary>💻 计算机</summary>
 <div class=tool-links>
-<a class=tool-link href=https://www.runoob.com/ target=_blank rel=noopener>📗 菜鸟教程 <span>编程入门+信息技术考点</span></a>
-<a class=tool-link href=https://leetcode.cn/ target=_blank rel=noopener>⚡ LeetCode 中国 <span>算法刷题，面试必备</span></a>
-<a class=tool-link href=https://github.com/ target=_blank rel=noopener>🐙 GitHub <span>全球最大代码开源社区</span></a>
-<a class=tool-link href=https://developer.mozilla.org/zh-CN/ target=_blank rel=noopener>📘 MDN 中文文档 <span>Web技术权威参考</span></a>
+<a class=tool-link href=https://www.runoob.com/ target=_blank rel=noopener>📗 菜鸟教程 <span>⚠跳转</span></a>
+<a class=tool-link href=https://leetcode.cn/ target=_blank rel=noopener>⚡ LeetCode 中国 <span>⚠跳转</span></a>
+<a class=tool-link href=https://github.com/ target=_blank rel=noopener>🐙 GitHub <span>⚠跳转</span></a>
+<a class=tool-link href=https://developer.mozilla.org/zh-CN/ target=_blank rel=noopener>📘 MDN 中文文档 <span>⚠跳转</span></a>
 </div>
 </details>
-<details class=tool-cat>
+<details class=tool-cat style="margin:0;border:none;background:none;backdrop-filter:none;-webkit-backdrop-filter:none">
 <summary>📋 升本政策</summary>
 <div class=tool-links>
-<a class=tool-link href=http://jyt.jiangxi.gov.cn/ target=_blank rel=noopener>🏛 江西省教育厅 <span>官方考试通知、招生计划</span></a>
-<a class=tool-link href=https://www.chsi.com.cn/ target=_blank rel=noopener>🎓 学信网 <span>学历查询、报名入口</span></a>
-<a class=tool-link href=https://www.jxeea.cn/ target=_blank rel=noopener>📝 江西省教育考试院 <span>报名/查分/录取官方渠道</span></a>
+<a class=tool-link href=http://jyt.jiangxi.gov.cn/ target=_blank rel=noopener>🏛 江西省教育厅 <span>⚠跳转</span></a>
+<a class=tool-link href=https://www.chsi.com.cn/ target=_blank rel=noopener>🎓 学信网 <span>⚠跳转</span></a>
+<a class=tool-link href=https://www.jxeea.cn/ target=_blank rel=noopener>📝 江西省教育考试院 <span>⚠跳转</span></a>
 </div>
 </details>
-<details class=tool-cat>
+<details class=tool-cat style="margin:0;border:none;background:none;backdrop-filter:none;-webkit-backdrop-filter:none">
 <summary>⏱ 自律工具</summary>
 <div class=tool-links>
-<a class=tool-link href=https://pomofocus.io/ target=_blank rel=noopener>🍅 Pomofocus 番茄钟 <span>在线番茄计时器</span></a>
-<a class=tool-link href=https://www.rainymood.com/ target=_blank rel=noopener>🌧 Rainy Mood <span>白噪音雨声，专注学习</span></a>
-<a class=tool-link href=https://www.noisli.com/ target=_blank rel=noopener>🎧 Noisli <span>混合白噪音，自定义环境音</span></a>
-<a class=tool-link href=https://www.forestapp.cc/ target=_blank rel=noopener>🌳 Forest 专注森林 <span>种树防刷手机，自律神器</span></a>
+<a class=tool-link href=https://pomofocus.io/ target=_blank rel=noopener>🍅 Pomofocus 番茄钟 <span>⚠跳转</span></a>
+<a class=tool-link href=https://www.rainymood.com/ target=_blank rel=noopener>🌧 Rainy Mood <span>⚠跳转</span></a>
+<a class=tool-link href=https://www.noisli.com/ target=_blank rel=noopener>🎧 Noisli <span>⚠跳转</span></a>
+<a class=tool-link href=https://www.forestapp.cc/ target=_blank rel=noopener>🌳 Forest 专注森林 <span>⚠跳转</span></a>
 </div>
 </details>
-
+</div>
+</details>
 <div style="margin-top:8px;padding:8px 12px;font-size:12px;color:var(--sub);border-top:1px solid var(--card-border)">💾 数据管理</div>
-<a class=tool-link onclick=exportData() style=cursor:pointer>📥 导出全部数据 <span>下载JSON备份文件</span></a><a class=tool-link onclick=importData() style=cursor:pointer>📤 导入恢复数据 <span>从备份文件恢复</span></a>
-</div></div><div class=scheck style="margin-bottom:14px"><div class=hdr>🍅 番茄钟</div><div style="display:flex;gap:8px;margin-top:6px"><button class=sv-btn onclick=togglePomo() id=pomoBtn style="float:none">▶ 开始番茄</button><span style="font-size:13px;color:var(--sub);padding:5px 0" id=pomoInfo>25min专注 + 5min休息</span></div><div class=sound-row><input type=checkbox id=soundToggle checked onchange=toggleSound()><label for=soundToggle>音效提醒</label></div></div><div class=scheck id=scheckSec><div class=hdr>📝 每周自检</div><textarea id=scheckText placeholder="这周哪个章节没吃透？下周重点攻什么？"></textarea><button class=sv-btn onclick=saveScheck()>保存</button></div></div>
+<a class=tool-link onclick=exportData() style=cursor:pointer>📥 导出全部数据 <span>下载JSON备份文件</span></a>
+<a class=tool-link onclick=importData() style=cursor:pointer>📤 导入恢复数据 <span>从备份文件恢复</span></a>
+</div><div class=scheck style="margin-bottom:14px"><div class=hdr>🍅 番茄钟</div><div style="display:flex;gap:8px;margin-top:6px"><button class=sv-btn onclick=togglePomo() id=pomoBtn style="float:none">▶ 开始番茄</button><span style="font-size:13px;color:var(--sub);padding:5px 0" id=pomoInfo>25min专注 + 5min休息</span></div><div class=sound-row><input type=checkbox id=soundToggle checked onchange=toggleSound()><label for=soundToggle>音效提醒</label></div></div><div class=scheck id=scheckSec><div class=hdr>📝 每周自检</div><textarea id=scheckText placeholder="这周哪个章节没吃透？下周重点攻什么？"></textarea><button class=sv-btn onclick=saveScheck()>保存</button></div></div>
 <div class=modal id=errModal onclick="if(event.target===this)closeErrModal()"><div class=box><div class=boxtitle>❌ 错题录入</div><select id=errSubj><option>高等数学</option><option>英语</option><option>信息技术</option><option>政治</option></select><textarea id=errCont placeholder="输入错题内容或考点..."></textarea><div class=btn-row><button class=btn-s onclick=saveErr()>保存</button><button class=btn-c onclick=closeErrModal()>取消</button></div><div id=errList style="margin-top:12px"></div></div></div>
 </div>
 <div class="tab-panel" id=tab-ref>
@@ -631,6 +726,282 @@ function closeFormula(){document.getElementById('fmModal').classList.remove('sho
 </script>
 <div class=bnav><button onclick="scrollTo(0,0)"><span class=ic>📅</span>今日</button><button onclick="toggleTheme()"><span class=ic id=bnTheme>☀️</span>主题</button><button onclick="toggleRest()"><span class=ic>💤</span>休息</button><button onclick="openErrModal()"><span class=ic>❌</span>错题</button><button onclick="openFormula()"><span class=ic>📚</span>公式</button></div>
 <script>
+
+// ===== INLINE TOOLS =====
+
+// Word quiz
+var _wqWords=[
+  {cn:'放弃',en:'abandon'},{cn:'吸收',en:'absorb'},{cn:'抽象的',en:'abstract'},
+  {cn:'学术的',en:'academic'},{cn:'进入',en:'access'},{cn:'账户',en:'account'},
+  {cn:'达成',en:'achieve'},{cn:'承认',en:'acknowledge'},{cn:'获得',en:'acquire'},
+  {cn:'适应',en:'adapt'},{cn:'足够的',en:'adequate'},{cn:'调整',en:'adjust'},
+  {cn:'钦佩',en:'admire'},{cn:'承认(错误)',en:'admit'},{cn:'采用',en:'adopt'},
+  {cn:'前进',en:'advance'},{cn:'冒险',en:'adventure'},{cn:'影响',en:'affect'},
+  {cn:'负担得起',en:'afford'},{cn:'同意',en:'agree'},{cn:'允许',en:'allow'},
+  {cn:'古代的',en:'ancient'},{cn:'出现',en:'appear'},{cn:'申请',en:'apply'},
+  {cn:'方法',en:'approach'},{cn:'争论',en:'argue'},{cn:'安排',en:'arrange'},
+  {cn:'方面',en:'aspect'},{cn:'评估',en:'assess'},{cn:'假设',en:'assume'},
+  {cn:'气氛',en:'atmosphere'},{cn:'态度',en:'attitude'},{cn:'吸引',en:'attract'},
+  {cn:'可用的',en:'available'},{cn:'平均',en:'average'},{cn:'避免',en:'avoid'},
+  {cn:'行为',en:'behavior'},{cn:'相信',en:'believe'},{cn:'利益',en:'benefit'},
+  {cn:'呼吸',en:'breathe'},{cn:'建造',en:'build'},{cn:'商业',en:'business'},
+  {cn:'能力',en:'capacity'},{cn:'职业',en:'career'},{cn:'原因',en:'cause'},
+  {cn:'庆祝',en:'celebrate'},{cn:'挑战',en:'challenge'},{cn:'特征',en:'character'},
+  {cn:'选择',en:'choose'},{cn:'环境',en:'circumstance'}
+];
+var _wqIdx=-1,_wqTotal=0,_wqRight=0;
+function wqStart(){
+  _wqTotal=0;_wqRight=0;
+  var el=document.getElementById('wqScore');
+  if(el)el.textContent='准备开始';
+  document.getElementById('wqHint').textContent='';
+  document.getElementById('wqInput').value='';
+  document.getElementById('wqInput').focus();
+  wqNext();
+}
+function wqNext(){
+  _wqIdx=Math.floor(Math.random()*_wqWords.length);
+  var w=_wqWords[_wqIdx];
+  document.getElementById('wqCn').textContent=w.cn;
+  document.getElementById('wqInput').value='';
+  document.getElementById('wqHint').textContent='';
+}
+function wqCheck(){
+  var w=_wqWords[_wqIdx];
+  if(!w)return wqStart();
+  var ua=document.getElementById('wqInput').value.trim().toLowerCase();
+  _wqTotal++;
+  if(ua===w.en){
+    _wqRight++;
+    document.getElementById('wqHint').textContent='正确! '+w.en;
+    document.getElementById('wqHint').style.color='var(--green)';
+    document.getElementById('wqScore').textContent=_wqRight+'/'+_wqTotal;
+    setTimeout(wqNext,800);
+  }else{
+    document.getElementById('wqHint').innerHTML='错误! 答案是 <b>'+w.en+'</b>';
+    document.getElementById('wqHint').style.color='var(--red)';
+    document.getElementById('wqScore').textContent=_wqRight+'/'+_wqTotal;
+  }
+}
+function wqSkip(){
+  var w=_wqWords[_wqIdx];
+  if(w)document.getElementById('wqHint').innerHTML='答案: <b>'+w.en+'</b>';
+  _wqTotal++;
+  document.getElementById('wqHint').style.color='var(--sub)';
+  document.getElementById('wqScore').textContent=_wqRight+'/'+_wqTotal;
+  setTimeout(wqNext,600);
+}
+
+// TTS
+function ttsSpeak(){
+  var t=document.getElementById('ttsText').value.trim();
+  if(!t)return;
+  window.speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(t);
+  u.lang='en-US';u.rate=0.9;
+  window.speechSynthesis.speak(u);
+}
+function ttsStop(){window.speechSynthesis.cancel()}
+
+// IPA lookup
+var _ipaMap={
+  abandon:"\u0259\u02C8b\u00E6nd\u0259n",absorb:"\u0259b\u02C8z\u0254\u02D0rb",
+  abstract:"\u02C8\u00E6bstr\u00E6kt",academic:"\u02CC\u00E6k\u0259\u02C8d\u025Bm\u026Ak",
+  access:"\u02C8\u00E6kses",account:"\u0259\u02C8ka\u028Ant",
+  achieve:"\u0259\u02C8t\u0283i\u02D0v",acknowledge:"\u0259k\u02C8n\u0252l\u026Ad\u0292",
+  acquire:"\u0259\u02C8kwa\u026A\u0259r",adapt:"\u0259\u02C8d\u00E6pt",
+  adequate:"\u02C8\u00E6d\u026Akw\u0259t",admire:"\u0259d\u02C8ma\u026A\u0259r",
+  admit:"\u0259d\u02C8m\u026At",adopt:"\u0259\u02C8d\u0252pt",
+  advance:"\u0259d\u02C8v\u0251\u02D0ns",affect:"\u0259\u02C8fekt",
+  agree:"\u0259\u02C8\u0261ri\u02D0",allow:"\u0259\u02C8la\u028A",
+  ancient:"\u02C8e\u026An\u0283\u0259nt",appear:"\u0259\u02C8p\u026A\u0259r",
+  apply:"\u0259\u02C8pla\u026A",approach:"\u0259\u02C8pr\u0259\u028At\u0283",
+  argue:"\u02C8\u0251\u02D0r\u0261ju\u02D0",arrange:"\u0259\u02C8re\u026And\u0292",
+  aspect:"\u02C8\u00E6spekt",assess:"\u0259\u02C8ses",
+  assume:"\u0259\u02C8sju\u02D0m",atmosphere:"\u02C8\u00E6tm\u0259sf\u026A\u0259r",
+  attitude:"\u02C8\u00E6t\u026Atju\u02D0d",attract:"\u0259\u02C8tr\u00E6kt",
+  available:"\u0259\u02C8ve\u026Al\u0259b\u0259l",avoid:"\u0259\u02C8v\u0254\u026Ad",
+  behavior:"b\u026A\u02C8he\u026Avj\u0259r",believe:"b\u026A\u02C8li\u02D0v",
+  benefit:"\u02C8ben\u026Af\u026At",build:"b\u026Ald",
+  business:"\u02C8b\u026Azn\u0259s",career:"k\u0259\u02C8r\u026A\u0259r",
+  cause:"k\u0254\u02D0z",celebrate:"\u02C8sel\u026Abre\u026At",
+  challenge:"\u02C8t\u0283\u00E6l\u026And\u0292",character:"\u02C8k\u00E6r\u0259kt\u0259r",
+  choose:"t\u0283u\u02D0z",circumstance:"\u02C8s\u025C\u02D0rk\u0259mst\u00E6ns",
+  communicate:"k\u0259\u02C8mju\u02D0n\u026Ake\u026At",community:"k\u0259\u02C8mju\u02D0n\u0259ti",
+  compare:"k\u0259m\u02C8pe\u0259r",compete:"k\u0259m\u02C8pi\u02D0t",
+  complete:"k\u0259m\u02C8pli\u02D0t",concentrate:"\u02C8k\u0252ns\u0259ntre\u026At",
+  condition:"k\u0259n\u02C8d\u026A\u0283\u0259n",connect:"k\u0259\u02C8nekt",
+  consequence:"\u02C8k\u0252ns\u026Akw\u0259ns",consider:"k\u0259n\u02C8s\u026Ad\u0259r",
+  contain:"k\u0259n\u02C8te\u026An",continue:"k\u0259n\u02C8t\u026Anju\u02D0",
+  contribute:"k\u0259n\u02C8tr\u026Abju\u02D0t",convince:"k\u0259n\u02C8v\u026Ans",
+  create:"kri\u02C8e\u026At",culture:"\u02C8k\u028Clt\u0283\u0259r",
+  decide:"d\u026A\u02C8sa\u026Ad",decrease:"d\u026A\u02C8kri\u02D0s",
+  defend:"d\u026A\u02C8fend",define:"d\u026A\u02C8fa\u026An",
+  deliver:"d\u026A\u02C8l\u026Av\u0259r",demand:"d\u026A\u02C8m\u0251\u02D0nd",
+  depend:"d\u026A\u02C8pend",describe:"d\u026A\u02C8skra\u026Ab",
+  design:"d\u026A\u02C8za\u026An",desire:"d\u026A\u02C8za\u026A\u0259r",
+  destroy:"d\u026A\u02C8str\u0254\u026A",determine:"d\u026A\u02C8t\u025C\u02D0rm\u026An",
+  develop:"d\u026A\u02C8vel\u0259p",discover:"d\u026A\u02C8sk\u028Cv\u0259r",
+  discuss:"d\u026A\u02C8sk\u028Cs",economy:"\u026A\u02C8k\u0252n\u0259mi",
+  education:"\u02CCed\u0292u\u02C8ke\u026A\u0283\u0259n",effect:"\u026A\u02C8fekt",
+  effort:"\u02C8ef\u0259rt",encourage:"\u026An\u02C8k\u028Cr\u026Ad\u0292",
+  environment:"\u026An\u02C8va\u026Ar\u0259nm\u0259nt",establish:"\u026A\u02C8st\u00E6bl\u026A\u0283",
+  evidence:"\u02C8ev\u026Ad\u0259ns",examine:"\u026A\u0261\u02C8z\u00E6m\u026An",
+  example:"\u026A\u0261\u02C8z\u0251\u02D0mp\u0259l",exist:"\u026A\u0261\u02C8z\u026Ast",
+  expect:"\u026Ak\u02C8spekt",experience:"\u026Ak\u02C8sp\u026A\u0259ri\u0259ns",
+  explain:"\u026Ak\u02C8sple\u026An",express:"\u026Ak\u02C8spres",
+  familiar:"f\u0259\u02C8m\u026Ali\u0259r",financial:"fa\u026A\u02C8n\u00E6n\u0283\u0259l",
+  foreign:"\u02C8f\u0252r\u0259n",government:"\u02C8\u0261\u028Cv\u0259rnm\u0259nt",
+  graduate:"\u02C8\u0261r\u00E6d\u0292u\u0259t",identify:"a\u026A\u02C8dent\u026Afa\u026A",
+  imagine:"\u026A\u02C8m\u00E6d\u0292\u026An",immediate:"\u026A\u02C8mi\u02D0di\u0259t",
+  important:"\u026Am\u02C8p\u0254\u02D0rt\u0259nt",improve:"\u026Am\u02C8pru\u02D0v",
+  include:"\u026An\u02C8klu\u02D0d",increase:"\u026An\u02C8kri\u02D0s",
+  individual:"\u02CC\u026And\u026A\u02C8v\u026Ad\u0292u\u0259l",influence:"\u02C8\u026Anflu\u0259ns",
+  information:"\u02CC\u026Anf\u0259r\u02C8me\u026A\u0283\u0259n",interest:"\u02C8\u026Antr\u0259st",
+  international:"\u02CC\u026Ant\u0259r\u02C8n\u00E6\u0283n\u0259l",introduce:"\u02CC\u026Antr\u0259\u02C8dju\u02D0s",
+  knowledge:"\u02C8n\u0252l\u026Ad\u0292",language:"\u02C8l\u00E6\u014B\u0261w\u026Ad\u0292",
+  manage:"\u02C8m\u00E6n\u026Ad\u0292",material:"m\u0259\u02C8t\u026A\u0259ri\u0259l",
+  measure:"\u02C8me\u0292\u0259r",memory:"\u02C8mem\u0259ri",
+  mention:"\u02C8men\u0283\u0259n",method:"\u02C8me\u03B8\u0259d",
+  natural:"\u02C8n\u00E6t\u0283r\u0259l",necessary:"\u02C8nes\u0259seri",
+  normal:"\u02C8n\u0254\u02D0rm\u0259l",object:"\u02C8\u0252bd\u0292\u026Akt",
+  observe:"\u0259b\u02C8z\u025C\u02D0rv",obtain:"\u0259b\u02C8te\u026An",
+  obvious:"\u02C8\u0252bvi\u0259s",operate:"\u02C8\u0252p\u0259re\u026At",
+  opinion:"\u0259\u02C8p\u026Anj\u0259n",opportunity:"\u02CC\u0252p\u0259r\u02C8tju\u02D0n\u0259ti",
+  organize:"\u02C8\u0254\u02D0r\u0261\u0259na\u026Az",particular:"p\u0259r\u02C8t\u026Akj\u0259l\u0259r",
+  perform:"p\u0259r\u02C8f\u0254\u02D0rm",physical:"\u02C8f\u026Az\u026Ak\u0259l",
+  policy:"\u02C8p\u0252l\u0259si",popular:"\u02C8p\u0252pj\u0259l\u0259r",
+  position:"p\u0259\u02C8z\u026A\u0283\u0259n",possible:"\u02C8p\u0252s\u0259b\u0259l",
+  practice:"\u02C8pr\u00E6kt\u026As",prepare:"pr\u026A\u02C8pe\u0259r",
+  present:"pr\u026A\u02C8zent",pressure:"\u02C8pre\u0283\u0259r",
+  prevent:"pr\u026A\u02C8vent",process:"\u02C8pr\u0259\u028Ases",
+  produce:"pr\u0259\u02C8dju\u02D0s",profession:"pr\u0259\u02C8fe\u0283\u0259n",
+  project:"\u02C8pr\u0252d\u0292ekt",promise:"\u02C8pr\u0252m\u026As",
+  protect:"pr\u0259\u02C8tekt",prove:"pru\u02D0v",
+  provide:"pr\u0259\u02C8va\u026Ad",purpose:"\u02C8p\u025C\u02D0rp\u0259s",
+  quality:"\u02C8kw\u0252l\u0259ti",realize:"\u02C8ri\u02D0\u0259la\u026Az",
+  receive:"r\u026A\u02C8si\u02D0v",recognize:"\u02C8rek\u0259\u0261na\u026Az",
+  recommend:"\u02CCrek\u0259\u02C8mend",record:"r\u026A\u02C8k\u0254\u02D0rd",
+  reduce:"r\u026A\u02C8dju\u02D0s",reflect:"r\u026A\u02C8flekt",
+  regard:"r\u026A\u02C8\u0261\u0251\u02D0rd",relate:"r\u026A\u02C8le\u026At",
+  remain:"r\u026A\u02C8me\u026An",remember:"r\u026A\u02C8memb\u0259r",
+  remove:"r\u026A\u02C8mu\u02D0v",represent:"\u02CCrepr\u026A\u02C8zent",
+  require:"r\u026A\u02C8kwa\u026A\u0259r",research:"r\u026A\u02C8s\u025C\u02D0rt\u0283",
+  resource:"r\u026A\u02C8s\u0254\u02D0rs",respond:"r\u026A\u02C8sp\u0252nd",
+  result:"r\u026A\u02C8z\u028Clt",satisfy:"\u02C8s\u00E6t\u026Asfa\u026A",
+  science:"\u02C8sa\u026A\u0259ns",separate:"\u02C8sep\u0259re\u026At",
+  serious:"\u02C8s\u026A\u0259ri\u0259s",service:"\u02C8s\u025C\u02D0rv\u026As",
+  several:"\u02C8sevr\u0259l",similar:"\u02C8s\u026Am\u0259l\u0259r",
+  situation:"\u02CCs\u026At\u0283u\u02C8e\u026A\u0283\u0259n",social:"\u02C8s\u0259\u028A\u0283\u0259l",
+  society:"s\u0259\u02C8sa\u026A\u0259ti",solution:"s\u0259\u02C8lu\u02D0\u0283\u0259n",
+  special:"\u02C8spe\u0283\u0259l",standard:"\u02C8st\u00E6nd\u0259rd",
+  strategy:"\u02C8str\u00E6t\u0259d\u0292i",struggle:"\u02C8str\u028C\u0261\u0259l",
+  succeed:"s\u0259k\u02C8si\u02D0d",suffer:"\u02C8s\u028Cf\u0259r",
+  suggest:"s\u0259\u02C8d\u0292est",support:"s\u0259\u02C8p\u0254\u02D0rt",
+  suppose:"s\u0259\u02C8p\u0259\u028Az",survive:"s\u0259r\u02C8va\u026Av",
+  system:"\u02C8s\u026Ast\u0259m",technology:"tek\u02C8n\u0252l\u0259d\u0292i",
+  therefore:"\u02C8\u00F0e\u0259f\u0254\u02D0r",tradition:"tr\u0259\u02C8d\u026A\u0283\u0259n",
+  translate:"tr\u00E6ns\u02C8le\u026At",understand:"\u02CC\u028Cnd\u0259r\u02C8st\u00E6nd",
+  university:"\u02CCju\u02D0n\u026A\u02C8v\u025C\u02D0rs\u0259ti",variety:"v\u0259\u02C8ra\u026A\u0259ti",
+  various:"\u02C8ve\u0259ri\u0259s",volunteer:"\u02CCv\u0252l\u0259n\u02C8t\u026A\u0259r"
+};
+function ipaLk(){
+  var w=document.getElementById('ipaIpt').value.trim().toLowerCase();
+  var out=document.getElementById('ipaOut');
+  if(!w){out.textContent='请输入单词';return}
+  if(_ipaMap[w]){out.textContent='/'+_ipaMap[w]+'/';out.style.color='var(--accent)'}
+  else{out.textContent='未找到该单词的音标';out.style.color='var(--sub)'}
+}
+
+// Calculator (safe eval)
+function clcDo(){
+  var expr=document.getElementById('calcIpt').value.trim();
+  var out=document.getElementById('calcOut');
+  if(!expr){out.textContent='';return}
+  try{
+    var sanitized=expr.replace(/\^/g,'**').replace(/PI/g,'Math.PI').replace(/sqrt/g,'Math.sqrt').replace(/sin/g,'Math.sin').replace(/cos/g,'Math.cos').replace(/tan/g,'Math.tan').replace(/log/g,'Math.log10').replace(/ln/g,'Math.log').replace(/abs/g,'Math.abs').replace(/exp/g,'Math.exp').replace(/E(?!\w)/g,'Math.E');
+    var result=Function('"use strict";return ('+sanitized+')')();
+    out.textContent='= '+result;
+    out.style.color='var(--accent)';
+  }catch(e){
+    out.textContent='无效表达式';
+    out.style.color='var(--red)';
+  }
+}
+
+// Formula search + copy
+var _formulas=[
+  {n:'导数: (xⁿ)\'',v:"(x^n)' = nx^(n-1)"},
+  {n:'导数: sin x',v:"(sin x)' = cos x"},
+  {n:'导数: cos x',v:"(cos x)' = -sin x"},
+  {n:'导数: eˣ',v:"(e^x)' = e^x"},
+  {n:'导数: ln x',v:"(ln x)' = 1/x"},
+  {n:'导数: tan x',v:"(tan x)' = sec²x"},
+  {n:'积分: xⁿ',v:"∫ x^n dx = x^(n+1)/(n+1)+C"},
+  {n:'积分: sin x',v:"∫ sin x dx = -cos x+C"},
+  {n:'积分: cos x',v:"∫ cos x dx = sin x+C"},
+  {n:'积分: eˣ',v:"∫ e^x dx = e^x+C"},
+  {n:'积分: 1/x',v:"∫ 1/x dx = ln|x|+C"},
+  {n:'极限: sin x/x',v:'lim(sin x/x)=1 (x→0)'},
+  {n:'极限: (1+1/x)ˣ',v:'lim(1+1/x)^x = e'},
+  {n:'三角: sin²+cos²',v:'sin²x+cos²x = 1'},
+  {n:'三角: 二倍角 sin',v:'sin(2x) = 2sin(x)cos(x)'},
+  {n:'三角: 二倍角 cos',v:'cos(2x) = cos²x-sin²x'},
+  {n:'对数: ln(ab)',v:'ln(ab) = ln(a)+ln(b)'},
+  {n:'对数: ln(a/b)',v:'ln(a/b) = ln(a)-ln(b)'},
+  {n:'对数: ln(aⁿ)',v:'ln(a^n) = n·ln(a)'},
+  {n:'指数: a⁰',v:'a^0 = 1 (a≠0)'},
+];
+function fmSearch(){
+  var q=document.getElementById('fmSrch').value.toLowerCase();
+  var list=document.getElementById('fmList');
+  var filtered=_formulas;
+  if(q){filtered=_formulas.filter(function(f){return f.n.indexOf(q)>-1||f.v.toLowerCase().indexOf(q)>-1})}
+  list.innerHTML=filtered.map(function(f){
+    return '<div style="padding:6px 8px;margin:2px 0;border-radius:6px;cursor:pointer;font-size:13px;font-family:monospace;background:var(--btn-bg);transition:all .15s" onclick="navigator.clipboard.writeText(this.textContent);this.style.background=\'var(--accent)\';this.style.color=\'#fff\';var t=this;setTimeout(function(){t.style.background=\'\';t.style.color=\'\'},600)" title="点击复制">'+f.n+' &rarr; '+f.v+'</div>';
+  }).join('');
+}
+fmSearch(); // init
+
+// Computer MCQ
+var _mcqQ=[
+  {q:'1 Byte = ?',o:['8 bit','16 bit','32 bit','64 bit'],a:0},
+  {q:'CPU的中文名称是？',o:['内存','中央处理器','硬盘','显卡'],a:1},
+  {q:'二进制 1010 转十进制是？',o:['8','9','10','11'],a:2},
+  {q:'操作系统的核心是？',o:['应用程序','文件系统','内核','浏览器'],a:2},
+  {q:'HTTP 的默认端口是？',o:['21','22','80','443'],a:2},
+  {q:'RAM 是什么存储器？',o:['只读存储器','随机存取存储器','硬盘存储','光盘存储'],a:1},
+  {q:'下列哪个是输出设备？',o:['键盘','鼠标','扫描仪','显示器'],a:3},
+  {q:'IP地址分为哪两个版本？',o:['IPv4和IPv6','IPv1和IPv2','IPv3和IPv4','IPv5和IPv6'],a:0},
+  {q:'数据库查询语言是？',o:['HTML','CSS','SQL','PHP'],a:2},
+  {q:'下列哪个不是编程语言？',o:['Python','Java','HTTP','C++'],a:2},
+];
+var _mcqCurr=-1,_mcqRight=0,_mcqTotal=0;
+function mcqNext(){
+  _mcqCurr=(_mcqCurr+1)%_mcqQ.length;
+  if(_mcqCurr===0){_mcqRight=0;_mcqTotal=0}
+  var q=_mcqQ[_mcqCurr];
+  document.getElementById('mcqQn').textContent=q.q;
+  var ops=document.getElementById('mcqOps');
+  ops.innerHTML=q.o.map(function(o,i){
+    return '<button class=mcq-opt onclick=mcqAns('+i+')>'+String.fromCharCode(65+i)+'. '+o+'</button>';
+  }).join('');
+  document.getElementById('mcqScore').textContent='';
+}
+function mcqAns(i){
+  var q=_mcqQ[_mcqCurr];_mcqTotal++;
+  var btns=document.querySelectorAll('.mcq-opt');
+  btns.forEach(function(b,j){
+    b.disabled=true;
+    if(j===q.a)b.classList.add('correct');
+    if(j===i&&i!==q.a)b.classList.add('wrong');
+  });
+  if(i===q.a)_mcqRight++;
+  document.getElementById('mcqScore').textContent=_mcqRight+'/'+_mcqTotal;
+}
+mcqNext(); // init
+
+
 // Custom tasks
 window._ct={};
 function loadCustom(prefix){
