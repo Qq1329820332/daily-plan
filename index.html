@@ -397,6 +397,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 <div id=mcqQn style="font-size:14px;font-weight:600;color:var(--text);padding:6px 0"></div>
 <div id=mcqOps style="display:flex;flex-direction:column;gap:4px;margin:4px 0"></div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+<span id=mcqExp style="font-size:12px;color:var(--green);margin-top:4px;display:block"></span>
 <span id=mcqScore style="font-size:12px;color:var(--sub)"></span>
 <button onclick=mcqNext() style="padding:6px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">下一题</button>
 </div>
@@ -970,7 +971,7 @@ function fmSearch(){
 fmSearch(); // init
 
 // Computer MCQ
-var _mcqChapters={base:[{q:'1 Byte = ?',o:['8 bit','16 bit','32 bit','64 bit'],a:0},{q:'二进制 1010 转十进制是？',o:['8','9','10','11'],a:2},{q:'下列哪个是输出设备？',o:['键盘','鼠标','扫描仪','显示器'],a:3},{q:'RAM 是什么存储器？',o:['只读存储器','随机存取存储器','硬盘存储','光盘存储'],a:1}],os:[{q:'操作系统的核心是？',o:['应用程序','文件系统','内核','浏览器'],a:2},{q:'下列哪个不是操作系统？',o:['Windows','Linux','Python','macOS'],a:2}],net:[{q:'HTTP 的默认端口是？',o:['21','22','80','443'],a:2},{q:'IP地址分为哪两个版本？',o:['IPv4和IPv6','IPv1和IPv2','IPv3和IPv4','IPv5和IPv6'],a:0},{q:'DNS 的作用是？',o:['加密数据','域名解析为IP','存储文件','发送邮件'],a:1}],db:[{q:'数据库查询语言是？',o:['HTML','CSS','SQL','PHP'],a:2},{q:'关系型数据库是？',o:['MongoDB','MySQL','Redis','Cassandra'],a:1}],prog:[{q:'下列哪个不是编程语言？',o:['Python','Java','HTTP','C++'],a:2},{q:'面向对象三大特性不包括？',o:['封装','继承','多态','递归'],a:3}]};var _mcqCh='base',_mcqQ=_mcqChapters['base'];
+var _mcqChapters={base:[{q:'1 Byte = ?',o:['8 bit','16 bit','32 bit','64 bit'],a:0,e:'1 Byte = 8 bit，是计算机存储的最小寻址单位'},{q:'二进制 1010 转十进制是？',o:['8','9','10','11'],a:2,e:'1×2^3+0×2^2+1×2^1+0×2^0=8+2=10'},{q:'下列哪个是输出设备？',o:['键盘','鼠标','扫描仪','显示器'],a:3,e:'显示器是输出设备，键盘/鼠标/扫描仪都是输入设备'},{q:'RAM 是什么存储器？',o:['只读存储器','随机存取存储器','硬盘存储','光盘存储'],a:1,e:'RAM=Random Access Memory，随机存取，断电数据丢失'}],os:[{q:'操作系统的核心是？',o:['应用程序','文件系统','内核','浏览器'],a:2,e:'内核(Kernel)管理CPU、内存、I/O等硬件资源，是操作系统最核心的部分'},{q:'下列哪个不是操作系统？',o:['Windows','Linux','Python','macOS'],a:2,e:'Python是编程语言，不是操作系统。Windows/Linux/macOS都是OS'}],net:[{q:'HTTP 的默认端口是？',o:['21','22','80','443'],a:2,e:'HTTP默认80端口，HTTPS默认443，FTP默认21，SSH默认22'},{q:'IP地址分为哪两个版本？',o:['IPv4和IPv6','IPv1和IPv2','IPv3和IPv4','IPv5和IPv6'],a:0,e:'IPv4用32位地址(192.168.1.1)，IPv6用128位地址，解决地址枯竭问题'},{q:'DNS 的作用是？',o:['加密数据','域名解析为IP','存储文件','发送邮件'],a:1,e:'DNS(Domain Name System)将域名转换成IP地址，是互联网的电话簿'}],db:[{q:'数据库查询语言是？',o:['HTML','CSS','SQL','PHP'],a:2,e:'SQL(Structured Query Language)是关系型数据库标准查询语言'},{q:'关系型数据库是？',o:['MongoDB','MySQL','Redis','Cassandra'],a:1,e:'MySQL是关系型数据库，MongoDB是文档库，Redis是缓存，Cassandra是列式存储'}],prog:[{q:'下列哪个不是编程语言？',o:['Python','Java','HTTP','C++'],a:2,e:'HTTP是超文本传输协议，不是编程语言'},{q:'面向对象三大特性不包括？',o:['封装','继承','多态','递归'],a:3,e:'面向对象三大特性：封装、继承、多态。递归是算法概念'}]};var _mcqCh='base',_mcqQ=_mcqChapters['base'];
 function mcqSwitch(ch){
   _mcqCh=ch;_mcqQ=_mcqChapters[ch];_mcqCurr=-1;_mcqRight=0;_mcqTotal=0;
   document.querySelectorAll('.mcq-ch-btn').forEach(function(b){b.classList.toggle('active',b.dataset.ch===ch)});
@@ -987,7 +988,7 @@ function mcqNext(){
   ops.innerHTML=q.o.map(function(o,i){
     return '<button class=mcq-opt onclick=mcqAns('+i+')>'+String.fromCharCode(65+i)+'. '+o+'</button>';
   }).join('');
-  document.getElementById('mcqScore').textContent='';
+  document.getElementById('mcqScore').textContent='';var ex=document.getElementById('mcqExp');if(ex)ex.textContent='';
 }
 function mcqAns(i){
   var q=_mcqQ[_mcqCurr];_mcqTotal++;
@@ -998,6 +999,7 @@ function mcqAns(i){
     if(j===i&&i!==q.a)b.classList.add('wrong');
   });
   if(i===q.a)_mcqRight++;
+  var ex=document.getElementById('mcqExp');if(ex&&q.e)ex.textContent='解析: '+q.e;else if(ex)ex.textContent='';
   document.getElementById('mcqScore').textContent=_mcqRight+'/'+_mcqTotal;
 }
 mcqNext(); // init
