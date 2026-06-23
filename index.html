@@ -2,263 +2,142 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>升本计划 · 每日打卡</title>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { font-size: 16px; -webkit-font-smoothing: antialiased; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Helvetica Neue", sans-serif;
-    background: #f5f5f7;
-    color: #1d1d1f;
-    line-height: 1.5;
-    min-height: 100vh;
-    padding-bottom: 40px;
-  }
-  .app {
-    max-width: 440px;
-    margin: 0 auto;
-    padding: 0 16px;
-  }
-  .header {
-    padding: 24px 0 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .header h1 {
-    font-size: 26px; font-weight: 800; letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #007aff, #5856d6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .header .date { font-size: 14px; color: #86868b; font-weight: 500; padding-top: 4px; }
-  .streak {
-    background: linear-gradient(135deg, #007aff 0%, #5856d6 100%);
-    border-radius: 16px; padding: 18px 20px; margin: 16px 0 14px;
-    display: flex; justify-content: space-between; align-items: center;
-    color: #fff; box-shadow: 0 8px 24px rgba(0,122,255,0.3);
-    position: relative; overflow: hidden;
-  }
-  .streak::before {
-    content: ''; position: absolute; top: -50%; right: -20%;
-    width: 200px; height: 200px; background: rgba(255,255,255,0.04); border-radius: 50%;
-  }
-  .streak .label { font-size: 15px; font-weight: 500; opacity: .95; }
-  .streak .count { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; }
-  .streak .count span { font-size: 16px; font-weight: 500; opacity: .8; }
-  .week {
-    display: flex; gap: 8px; justify-content: center; margin-bottom: 18px;
-  }
-  .week .dot {
-    width: 40px; height: 40px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 600;
-    background: #fff; color: #86868b;
-    box-shadow: 0 2px 6px rgba(0,0,0,.04);
-    transition: all .25s cubic-bezier(.175,.885,.32,1.275);
-    position: relative;
-  }
-  .week .dot.today { background: #007aff; color: #fff; box-shadow: 0 4px 12px rgba(0,122,255,.3); transform: scale(1.05); }
-  .week .dot.done { background: #34c759; color: #fff; box-shadow: 0 4px 12px rgba(52,199,89,.3); }
-  .week .dot.done::after {
-    content: '✓'; font-size: 10px; position: absolute; top: -4px; right: -4px;
-    background: #fff; color: #34c759; width: 16px; height: 16px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; font-weight: 700;
-    box-shadow: 0 2px 4px rgba(0,0,0,.1);
-  }
-  .stats {
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 22px;
-  }
-  .stat {
-    background: #fff; border-radius: 14px; padding: 14px 8px; text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,.04); transition: all .2s;
-  }
-  .stat:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.06); }
-  .stat .num {
-    font-size: 22px; font-weight: 800;
-    background: linear-gradient(135deg, #007aff, #5856d6);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-  .stat .lbl { font-size: 12px; color: #86868b; margin-top: 3px; font-weight: 500; }
-  .section { margin-bottom: 22px; }
-  .section-title {
-    display: flex; align-items: center; gap: 8px; padding: 0 4px; margin-bottom: 8px;
-  }
-  .section-title span { font-size: 14px; font-weight: 700; color: #86868b; letter-spacing: .3px; }
-  .section-title .line { flex: 1; height: 1px; background: linear-gradient(90deg, #e5e5ea, transparent); }
-  .section-title .pill { font-size: 11px; padding: 3px 12px; border-radius: 20px; font-weight: 600; }
-  .pill-red { background: #ffebee; color: #d32f2f; }
-  .pill-orange { background: #fff3e0; color: #e65100; }
-  .pill-blue { background: #e3f2fd; color: #1565c0; }
-  .task {
-    background: #fff; border-radius: 14px; padding: 0 16px; margin-bottom: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.04);
-    display: flex; align-items: center; gap: 12px; min-height: 60px; cursor: pointer;
-    transition: all .2s cubic-bezier(.175,.885,.32,1.275);
-    user-select: none; -webkit-tap-highlight-color: transparent;
-    position: relative; overflow: hidden;
-  }
-  .task::after {
-    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
-    background: transparent; transition: background .2s;
-  }
-  .task:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,.06); }
-  .task:active { transform: scale(.985); }
-  .task .chk {
-    width: 24px; height: 24px; flex-shrink: 0; border-radius: 8px;
-    border: 2px solid #d1d1d6;
-    transition: all .25s cubic-bezier(.175,.885,.32,1.275);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .task .chk.on { background: #34c759; border-color: #34c759; box-shadow: 0 4px 10px rgba(52,199,89,.3); }
-  @keyframes pop { 0%{transform:scale(.5)} 50%{transform:scale(1.2)} 100%{transform:scale(1)} }
-  .task .chk.on svg { animation: pop .3s cubic-bezier(.175,.885,.32,1.275); }
-  .task .body { flex: 1; padding: 12px 0; }
-  .task .body .name { font-size: 15px; font-weight: 600; transition: color .2s; }
-  .task .body .desc { font-size: 12px; color: #8e8e93; margin-top: 2px; transition: color .2s; }
-  .task.done .body .name { color: #c7c7cc; text-decoration: line-through; }
-  .task.done .body .desc { color: #d1d1d6; }
-  .task .tail { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-  .task .tail .dur { font-size: 13px; color: #8e8e93; font-variant-numeric: tabular-nums; min-width: 32px; text-align: right; font-weight: 500; }
-  .bili {
-    display: inline-flex; align-items: center; gap: 4px;
-    border: none; border-radius: 8px; padding: 7px 13px;
-    font-size: 12px; font-weight: 600; cursor: pointer; text-decoration: none;
-    transition: all .2s; background: #fb7299; color: #fff; position: relative; overflow: hidden;
-  }
-  .bili::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,.15), transparent); }
-  .bili:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(251,114,153,.3); }
-  .bili:active { transform: scale(.95); }
-  .tmr {
-    background: #f2f3f7; border: none; border-radius: 8px; padding: 7px 13px;
-    font-size: 12px; font-weight: 600; color: #1d1d1f; cursor: pointer;
-    transition: all .2s; font-family: inherit;
-  }
-  .tmr:hover { background: #e5e5ea; }
-  .tmr:active { transform: scale(.95); }
-  .tmr.run { background: #ff3b30; color: #fff; animation: pulse 1.2s ease-in-out infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.65} }
-  .toast {
-    position: fixed; bottom: 32px; left: 50%;
-    transform: translateX(-50%) translateY(30px);
-    background: #1d1d1f; color: #fff;
-    padding: 12px 28px; border-radius: 16px;
-    font-size: 14px; font-weight: 600;
-    opacity: 0; transition: all .4s cubic-bezier(.175,.885,.32,1.275);
-    pointer-events: none; z-index: 1000;
-    box-shadow: 0 8px 30px rgba(0,0,0,.2); white-space: nowrap;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .toast .icon {
-    width: 24px; height: 24px; border-radius: 50%;
-    background: #34c759; display: flex; align-items: center;
-    justify-content: center; flex-shrink: 0;
-  }
-  .footer { text-align: center; padding: 12px 0; font-size: 12px; color: #c7c7cc; line-height: 1.8; }
-</style>
+<style>:root{--bg:#f8f6f3;--card-bg:rgba(255,255,255,0.65);--card-border:rgba(255,255,255,0.3);--card-shadow:0 8px 32px rgba(149,157,165,0.1);--text:#3d3d4a;--sub:#9a9ab0;--accent:#7c6df0;--accent2:#f0937a;--green:#6bcbaa;--red:#f06a6a;--bili:#fb7299;--chk-border:#d0d0da;--card-hover:rgba(255,255,255,0.85);--sep:rgba(0,0,0,0.04);--btn-bg:rgba(255,255,255,0.5);--btn-hover:rgba(255,255,255,0.8);--streak-from:#7c6df0;--streak-to:#f0937a;--toast-bg:#3d3d4a;--footer:#c0c0ce;--week-dot:#fff;--week-shadow:0 4px 12px rgba(149,157,165,0.12);--quote-bg:rgba(124,109,240,0.06);--tag-red-bg:#fce8e8;--tag-red:#d45353;--tag-org-bg:#fef0e0;--tag-org:#d47a3a;--tag-blu-bg:#e8edfc;--tag-blu:#5a6bd4;--text-inv:#fff}
+.dark{--bg:#1a1a2e;--card-bg:rgba(255,255,255,0.06);--card-border:rgba(255,255,255,0.06);--card-shadow:0 8px 32px rgba(0,0,0,0.2);--text:#e8e8f0;--sub:#8888a0;--accent:#9b8cf5;--accent2:#f5a08a;--green:#6bcbaa;--red:#f06a6a;--chk-border:#555570;--card-hover:rgba(255,255,255,0.09);--sep:rgba(255,255,255,0.04);--btn-bg:rgba(255,255,255,0.06);--btn-hover:rgba(255,255,255,0.1);--streak-from:#7c6df0;--streak-to:#6bcbaa;--toast-bg:#e8e8f0;--footer:#555570;--week-dot:rgba(255,255,255,0.06);--week-shadow:0 4px 12px rgba(0,0,0,0.2);--quote-bg:rgba(124,109,240,0.08);--text-inv:#1a1a2e;--tag-red-bg:rgba(212,83,83,0.15);--tag-org-bg:rgba(212,122,58,0.15);--tag-blu-bg:rgba(90,107,212,0.15)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Helvetica Neue",sans-serif;background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh;padding-bottom:40px;transition:background .3s,color .3s}
+.app{max-width:440px;margin:0 auto;padding:0 16px}
+.glow1,.glow2{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:-1;transition:background .3s}
+.glow1{width:300px;height:300px;top:-80px;right:-60px;background:rgba(124,109,240,0.12)}
+.dark .glow1{background:rgba(124,109,240,0.08)}
+.glow2{width:250px;height:250px;bottom:-60px;left:-60px;background:rgba(240,147,122,0.10)}
+.dark .glow2{background:rgba(107,203,170,0.08)}
+.header{padding:28px 0 4px;display:flex;justify-content:space-between;align-items:center}
+.header-l{display:flex;align-items:center;gap:8px}
+.header h1{font-size:24px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.theme-btn{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all .2s}
+.theme-btn:hover{transform:scale(1.05);background:var(--card-hover)}
+.header .date{font-size:13px;color:var(--sub);font-weight:500}
+.quote{background:var(--quote-bg);border-radius:14px;padding:14px 16px;margin:14px 0 12px;border-left:3px solid var(--accent);transition:background .3s}
+.quote .en{font-size:14px;font-weight:600;color:var(--accent);line-height:1.5}
+.quote .cn{font-size:12px;color:var(--sub);margin-top:4px}.streak{background:linear-gradient(135deg,var(--streak-from),var(--streak-to));border-radius:16px;padding:18px 20px;margin:0 0 14px;display:flex;justify-content:space-between;align-items:center;color:#fff;box-shadow:0 8px 24px rgba(124,109,240,0.25);position:relative;overflow:hidden}
+.streak::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%}
+.streak .label{font-size:15px;font-weight:500;opacity:.95}
+.streak .count{font-size:30px;font-weight:800;letter-spacing:-.5px}
+.streak .count span{font-size:15px;font-weight:500;opacity:.8}
+.week{display:flex;gap:8px;justify-content:center;margin-bottom:18px}
+.week .dot{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:var(--week-dot);color:var(--sub);box-shadow:var(--week-shadow);transition:all .25s cubic-bezier(.175,.885,.32,1.275);position:relative;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.week .dot.today{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(124,109,240,.3);transform:scale(1.05)}
+.week .dot.done{background:var(--green);color:#fff;box-shadow:0 4px 12px rgba(107,203,170,.3)}
+.week .dot.done::after{content:'\2713';font-size:10px;position:absolute;top:-4px;right:-4px;background:#fff;color:var(--green);width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;box-shadow:0 2px 4px rgba(0,0,0,.1)}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:22px}
+.stat{background:var(--card-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--card-border);border-radius:14px;padding:14px 8px;text-align:center;box-shadow:var(--card-shadow);transition:all .2s}
+.stat:hover{transform:translateY(-1px);background:var(--card-hover)}
+.stat .num{font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat .lbl{font-size:12px;color:var(--sub);margin-top:3px;font-weight:500}
+.section{margin-bottom:22px}
+.section-title{display:flex;align-items:center;gap:8px;padding:0 4px;margin-bottom:8px}
+.section-title span{font-size:14px;font-weight:700;color:var(--sub);letter-spacing:.3px}
+.section-title .line{flex:1;height:1px;background:linear-gradient(90deg,var(--sep),transparent)}
+.section-title .pill{font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600}
+.pill-red{background:var(--tag-red-bg);color:var(--tag-red)}
+.pill-org{background:var(--tag-org-bg);color:var(--tag-org)}
+.pill-blu{background:var(--tag-blu-bg);color:var(--tag-blu)}
+.task{background:var(--card-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--card-border);border-radius:14px;padding:0 16px;margin-bottom:8px;box-shadow:var(--card-shadow);display:flex;align-items:center;gap:12px;min-height:60px;cursor:pointer;transition:all .2s cubic-bezier(.175,.885,.32,1.275);user-select:none;-webkit-tap-highlight-color:transparent}
+.task:hover{transform:translateY(-1px);background:var(--card-hover);box-shadow:0 8px 24px rgba(149,157,165,0.12)}
+.task:active{transform:scale(.985)}
+.task .chk{width:24px;height:24px;flex-shrink:0;border-radius:8px;border:2px solid var(--chk-border);transition:all .25s cubic-bezier(.175,.885,.32,1.275);display:flex;align-items:center;justify-content:center}
+.task .chk.on{background:var(--green);border-color:var(--green);box-shadow:0 4px 10px rgba(107,203,170,.3)}
+@keyframes pop{0%{transform:scale(.5)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+.task .chk.on svg{animation:pop .3s cubic-bezier(.175,.885,.32,1.275)}
+.task .body{flex:1;padding:12px 0}
+.task .body .name{font-size:15px;font-weight:600;transition:color .2s}
+.task .body .desc{font-size:12px;color:var(--sub);margin-top:2px;transition:color .2s}
+.task.done .body .name{color:var(--chk-border);text-decoration:line-through}
+.task.done .body .desc{color:var(--sep)}
+.task .tail{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.task .tail .dur{font-size:13px;color:var(--sub);font-variant-numeric:tabular-nums;min-width:32px;text-align:right;font-weight:500}
+.bili{display:inline-flex;align-items:center;gap:4px;border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;background:var(--bili);color:#fff}
+.bili:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(251,114,153,.3)}.bili:active{transform:scale(.95)}
+.tmr{background:var(--btn-bg);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:1px solid var(--card-border);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;transition:all .2s;font-family:inherit}
+.tmr:hover{background:var(--btn-hover)}.tmr:active{transform:scale(.95)}
+.tmr.run{background:var(--red);border-color:var(--red);color:#fff;animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--toast-bg);color:var(--bg);padding:12px 24px;border-radius:16px;font-size:14px;font-weight:600;opacity:0;transition:all .4s cubic-bezier(.175,.885,.32,1.275);pointer-events:none;z-index:1000;box-shadow:0 8px 30px rgba(0,0,0,.15);display:flex;align-items:center;gap:8px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast .ico{width:24px;height:24px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.footer{text-align:center;padding:16px 0;font-size:12px;color:var(--footer);line-height:1.8}</style>
 </head>
 <body>
-<div class="app">
-  <div class="header">
-    <h1>升本计划</h1>
-    <span class="date" id="d"></span>
-  </div>
-  <div class="streak">
-    <span class="label">🔥 连续学习</span>
-    <span class="count"><span id="s">0</span> <span>天</span></span>
-  </div>
-  <div class="week" id="w"></div>
-  <div class="stats">
-    <div class="stat"><div class="num" id="dc">0/7</div><div class="lbl">今日完成</div></div>
-    <div class="stat"><div class="num" id="wc">0</div><div class="lbl">本周天数</div></div>
-    <div class="stat"><div class="num" id="tm">0</div><div class="lbl">学习分钟</div></div>
-  </div>
-
-  <div class="section">
-    <div class="section-title"><span>🗣 英语 · 必做</span><span class="line"></span><span class="pill pill-red">每日任务</span></div>
-    <div class="task" data-id="y1" data-time="20">
-      <div class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7.5L5.5 11L12 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="body"><div class="name">周育如音标课</div><div class="desc">跟着视频大声朗读，开口最重要</div></div>
-      <div class="tail">
-        <a class="bili" href="https://www.bilibili.com/video/BV1N5EW6dE2Z" target="_blank" onclick="event.stopPropagation();var t=this.closest('.task').querySelector('.tmr');if(t&&!t.dataset.r)t.click();"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.562 3.76v7.36c-.038 1.51-.558 2.765-1.562 3.761-1.004.996-2.263 1.52-3.773 1.574h-.854c-.427 0-.748-.14-.962-.42-.213-.28-.32-.598-.32-.955v-.427c0-.284.107-.534.32-.748.214-.214.49-.32.827-.32h1.709c.783 0 1.45-.276 2.003-.828.554-.553.83-1.22.83-2.002v-6.57c0-.782-.276-1.45-.83-2.003-.553-.554-1.22-.83-2.003-.83h-11.2c-.782 0-1.45.276-2.002.83-.554.553-.83 1.22-.83 2.003v6.569c0 .783.276 1.45.83 2.003.553.553 1.22.829 2.003.829h7.683c.373 0 .683.117.928.35.245.234.368.525.368.874v.427c0 .32-.123.619-.368.896-.245.277-.555.416-.928.416H6.58c-1.51-.054-2.769-.578-3.773-1.574-1.004-.995-1.524-2.25-1.562-3.76v-7.36c.038-1.512.558-2.766 1.562-3.761 1.004-.996 2.263-1.52 3.773-1.574h.79c.427 0 .748.14.962.42.214.28.32.598.32.955v.427c0 .283-.107.533-.32.747-.214.214-.49.32-.827.32H6.187c-.783 0-1.45.276-2.003.828-.554.553-.83 1.22-.83 2.003v1.709c0 .427.14.748.42.962.28.214.598.32.955.32h11.52c.427 0 .748-.14.962-.42.213-.28.32-.598.32-.955V8.412c0-.427-.14-.748-.42-.962-.28-.213-.598-.32-.955-.32h-2.24c-.32 0-.58-.117-.78-.352-.2-.235-.3-.523-.3-.864v-.395c0-.33.107-.622.32-.875.214-.253.478-.38.79-.38z"/></svg>B站</a>
-        <button class="tmr" onclick="event.stopPropagation();timer(this)">▶ 20</button>
-        <span class="dur">20</span>
-      </div>
-    </div>
-    <div class="task" data-id="y2" data-time="30">
-      <div class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7.5L5.5 11L12 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="body"><div class="name">专升本核心词汇 15-20个</div><div class="desc">用背词APP，边拼边读边写</div></div>
-      <div class="tail">
-        <button class="tmr" onclick="event.stopPropagation();timer(this)">▶ 30</button>
-        <span class="dur">30</span>
-      </div>
-    </div>
-    <div class="task" data-id="y3" data-time="20">
-      <div class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7.5L5.5 11L12 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="body"><div class="name">语法基础 · 一节视频课</div><div class="desc">词性 → 主谓宾 → 8大时态</div></div>
-      <div class="tail">
-        <a class="bili" href="https://www.bilibili.com/video/BV1yR4y117yx" target="_blank" onclick="event.stopPropagation();var t=this.closest('.task').querySelector('.tmr');if(t&&!t.dataset.r)t.click();"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.562 3.76v7.36c-.038 1.51-.558 2.765-1.562 3.761-1.004.996-2.263 1.52-3.773 1.574h-.854c-.427 0-.748-.14-.962-.42-.213-.28-.32-.598-.32-.955v-.427c0-.284.107-.534.32-.748.214-.214.49-.32.827-.32h1.709c.783 0 1.45-.276 2.003-.828.554-.553.83-1.22.83-2.002v-6.57c0-.782-.276-1.45-.83-2.003-.553-.554-1.22-.83-2.003-.83h-11.2c-.782 0-1.45.276-2.002.83-.554.553-.83 1.22-.83 2.003v6.569c0 .783.276 1.45.83 2.003.553.553 1.22.829 2.003.829h7.683c.373 0 .683.117.928.35.245.234.368.525.368.874v.427c0 .32-.123.619-.368.896-.245.277-.555.416-.928.416H6.58c-1.51-.054-2.769-.578-3.773-1.574-1.004-.995-1.524-2.25-1.562-3.76v-7.36c.038-1.512.558-2.766 1.562-3.761 1.004-.996 2.263-1.52 3.773-1.574h.79c.427 0 .748.14.962.42.214.28.32.598.32.955v.427c0 .283-.107.533-.32.747-.214.214-.49.32-.827.32H6.187c-.783 0-1.45.276-2.003.828-.554.553-.83 1.22-.83 2.003v1.709c0 .427.14.748.42.962.28.214.598.32.955.32h11.52c.427 0 .748-.14.962-.42.213-.28.32-.598.32-.955V8.412c0-.427-.14-.748-.42-.962-.28-.213-.598-.32-.955-.32h-2.24c-.32 0-.58-.117-.78-.352-.2-.235-.3-.523-.3-.864v-.395c0-.33.107-.622.32-.875.214-.253.478-.38.79-.38z"/></svg>B站</a>
-        <button class="tmr" onclick="event.stopPropagation();timer(this)">▶ 20</button>
-        <span class="dur">20</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title"><span>🔢 高等数学 · 重点</span><span class="line"></span><span class="pill pill-orange">150分</span></div>
-    <div class="task" data-id="m1" data-time="90">
-      <div class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7.5L5.5 11L12 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="body"><div class="name">高数网课 1 节 + 课后习题</div><div class="desc">从函数与极限开始，逐节推进</div></div>
-      <div class="tail">
-        <a class="bili" href="https://www.bilibili.com/video/BV1swAWerEzS" target="_blank" onclick="event.stopPropagation();var t=this.closest('.task').querySelector('.tmr');if(t&&!t.dataset.r)t.click();"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.562 3.76v7.36c-.038 1.51-.558 2.765-1.562 3.761-1.004.996-2.263 1.52-3.773 1.574h-.854c-.427 0-.748-.14-.962-.42-.213-.28-.32-.598-.32-.955v-.427c0-.284.107-.534.32-.748.214-.214.49-.32.827-.32h1.709c.783 0 1.45-.276 2.003-.828.554-.553.83-1.22.83-2.002v-6.57c0-.782-.276-1.45-.83-2.003-.553-.554-1.22-.83-2.003-.83h-11.2c-.782 0-1.45.276-2.002.83-.554.553-.83 1.22-.83 2.003v6.569c0 .783.276 1.45.83 2.003.553.553 1.22.829 2.003.829h7.683c.373 0 .683.117.928.35.245.234.368.525.368.874v.427c0 .32-.123.619-.368.896-.245.277-.555.416-.928.416H6.58c-1.51-.054-2.769-.578-3.773-1.574-1.004-.995-1.524-2.25-1.562-3.76v-7.36c.038-1.512.558-2.766 1.562-3.761 1.004-.996 2.263-1.52 3.773-1.574h.79c.427 0 .748.14.962.42.214.28.32.598.32.955v.427c0 .283-.107.533-.32.747-.214.214-.49.32-.827.32H6.187c-.783 0-1.45.276-2.003.828-.554.553-.83 1.22-.83 2.003v1.709c0 .427.14.748.42.962.28.214.598.32.955.32h11.52c.427 0 .748-.14.962-.42.213-.28.32-.598.32-.955V8.412c0-.427-.14-.748-.42-.962-.28-.213-.598-.32-.955-.32h-2.24c-.32 0-.58-.117-.78-.352-.2-.235-.3-.523-.3-.864v-.395c0-.33.107-.622.32-.875.214-.253.478-.38.79-.38z"/></svg>B站</a>
-        <button class="tmr" onclick="event.stopPropagation();timer(this)">▶ 90</button>
-        <span class="dur">90</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title"><span>📌 每周附加 · 选做</span><span class="line"></span><span class="pill pill-blue">按需完成</span></div>
-    <div class="task" data-id="w1" data-time="30">
-      <div class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7.5L5.5 11L12 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="body"><div class="name">信息技术 · 做 1 套真题</div><div class="desc">计算机专业优势科目，考前再集中</div></div>
-      <div class="tail"><span class="dur">30</span></div>
-    </div>
-    <div class="task" data-id="w2" data-time="30">
-      <div class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7.5L5.5 11L12 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="body"><div class="name">政治 · 看新闻 + 背知识点</div><div class="desc">考前 3 个月再全力冲刺</div></div>
-      <div class="tail"><span class="dur">30</span></div>
-    </div>
-    <div class="task" data-id="w3" data-time="15">
-      <div class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7.5L5.5 11L12 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="body"><div class="name">周末复习 · 本周错题回顾</div><div class="desc">不欠债，回头看一遍</div></div>
-      <div class="tail"><span class="dur">15</span></div>
-    </div>
-  </div>
-
-  <div class="footer">点击任务行自动勾选 · 点 B站 看课+计时同步<br>数据保存在浏览器，每天打开接着用</div>
-</div>
-
-<div class="toast" id="toast"><span class="icon">✓</span> <span id="toastText">已保存</span></div>
-
-<script>
-const pad = n => String(n).padStart(2,'0');
-const wds = ['日','一','二','三','四','五','六'];
+<div class=glow1></div><div class=glow2></div>
+<div class=app>
+<div class=header><div class=header-l><h1>升本计划</h1><button class=theme-btn id=themeBtn onclick=tt() title="切换深色模式">&#x2600;&#xFE0F;</button></div><span class=date id=d></span></div>
+<div class=quote><div class=en id=qe></div><div class=cn id=qc></div></div>
+<div class=streak><span class=label>&#x1F525; 连续学习</span><span class=count><span id=s>0</span> <span>天</span></span></div>
+<div class=week id=w></div>
+<div class=stats>
+<div class=stat><div class=num id=dc>0/7</div><div class=lbl>今日完成</div></div>
+<div class=stat><div class=num id=wc>0</div><div class=lbl>本周天数</div></div>
+<div class=stat><div class=num id=tm>0</div><div class=lbl>学习分钟</div></div></div>
+<div class=section>
+<div class=section-title><span>&#x1F5E3; 英语 · 必做</span><span class=line></span><span class="pill pill-red">每日任务</span></div>
+<div class=task data-id=y1 data-time=20>
+<div class=chk><svg width=14 height=14 viewBox="0 0 14 14"><path d="M2 7.5L5.5 11L12 3" stroke=white stroke-width=2.5 fill=none stroke-linecap=round stroke-linejoin=round/></svg></div>
+<div class=body><div class=name>周育如音标课</div><div class=desc>跟着视频大声朗读，开口最重要</div></div>
+<div class=tail>
+<a class=bili href="https://www.bilibili.com/video/BV1N5EW6dE2Z" target=_blank onclick="event.stopPropagation();var t=this.closest('.task').querySelector('.tmr');if(t&&!t.dataset.r)t.click()"><svg width=14 height=14 viewBox="0 0 24 24" fill=currentColor><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.562 3.76v7.36c-.038 1.51-.558 2.765-1.562 3.761-1.004.996-2.263 1.52-3.773 1.574h-.854c-.427 0-.748-.14-.962-.42-.213-.28-.32-.598-.32-.955v-.427c0-.284.107-.534.32-.748.214-.214.49-.32.827-.32h1.709c.783 0 1.45-.276 2.003-.828.554-.553.83-1.22.83-2.002v-6.57c0-.782-.276-1.45-.83-2.003-.553-.554-1.22-.83-2.003-.83h-11.2c-.782 0-1.45.276-2.002.83-.554.553-.83 1.22-.83 2.003v6.569c0 .783.276 1.45.83 2.003.553.553 1.22.829 2.003.829h7.683c.373 0 .683.117.928.35.245.234.368.525.368.874v.427c0 .32-.123.619-.368.896-.245.277-.555.416-.928.416H6.58c-1.51-.054-2.769-.578-3.773-1.574-1.004-.995-1.524-2.25-1.562-3.76v-7.36c.038-1.512.558-2.766 1.562-3.761 1.004-.996 2.263-1.52 3.773-1.574h.79c.427 0 .748.14.962.42.214.28.32.598.32.955v.427c0 .283-.107.533-.32.747-.214.214-.49.32-.827.32H6.187c-.783 0-1.45.276-2.003.828-.554.553-.83 1.22-.83 2.003v1.709c0 .427.14.748.42.962.28.214.598.32.955.32h11.52c.427 0 .748-.14.962-.42.213-.28.32-.598.32-.955V8.412c0-.427-.14-.748-.42-.962-.28-.213-.598-.32-.955-.32h-2.24c-.32 0-.58-.117-.78-.352-.2-.235-.3-.523-.3-.864v-.395c0-.33.107-.622.32-.875.214-.253.478-.38.79-.38z"/></svg>B站</a>
+<button class=tmr onclick="event.stopPropagation();timer(this)">&#x25B6; 20</button>
+<span class=dur>20</span></div></div>
+<div class=task data-id=y2 data-time=30>
+<div class=chk><svg width=14 height=14 viewBox="0 0 14 14"><path d="M2 7.5L5.5 11L12 3" stroke=white stroke-width=2.5 fill=none stroke-linecap=round stroke-linejoin=round/></svg></div>
+<div class=body><div class=name>专升本核心词汇 15-20个</div><div class=desc>用背词APP，边拼边读边写</div></div>
+<div class=tail><button class=tmr onclick="event.stopPropagation();timer(this)">&#x25B6; 30</button><span class=dur>30</span></div></div>
+<div class=task data-id=y3 data-time=20>
+<div class=chk><svg width=14 height=14 viewBox="0 0 14 14"><path d="M2 7.5L5.5 11L12 3" stroke=white stroke-width=2.5 fill=none stroke-linecap=round stroke-linejoin=round/></svg></div>
+<div class=body><div class=name>语法基础 · 一节视频课</div><div class=desc>词性 &#x2192; 主谓宾 &#x2192; 8大时态</div></div>
+<div class=tail>
+<a class=bili href="https://www.bilibili.com/video/BV1yR4y117yx" target=_blank onclick="event.stopPropagation();var t=this.closest('.task').querySelector('.tmr');if(t&&!t.dataset.r)t.click()"><svg width=14 height=14 viewBox="0 0 24 24" fill=currentColor><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.562 3.76v7.36c-.038 1.51-.558 2.765-1.562 3.761-1.004.996-2.263 1.52-3.773 1.574h-.854c-.427 0-.748-.14-.962-.42-.213-.28-.32-.598-.32-.955v-.427c0-.284.107-.534.32-.748.214-.214.49-.32.827-.32h1.709c.783 0 1.45-.276 2.003-.828.554-.553.83-1.22.83-2.002v-6.57c0-.782-.276-1.45-.83-2.003-.553-.554-1.22-.83-2.003-.83h-11.2c-.782 0-1.45.276-2.002.83-.554.553-.83 1.22-.83 2.003v6.569c0 .783.276 1.45.83 2.003.553.553 1.22.829 2.003.829h7.683c.373 0 .683.117.928.35.245.234.368.525.368.874v.427c0 .32-.123.619-.368.896-.245.277-.555.416-.928.416H6.58c-1.51-.054-2.769-.578-3.773-1.574-1.004-.995-1.524-2.25-1.562-3.76v-7.36c.038-1.512.558-2.766 1.562-3.761 1.004-.996 2.263-1.52 3.773-1.574h.79c.427 0 .748.14.962.42.214.28.32.598.32.955v.427c0 .283-.107.533-.32.747-.214.214-.49.32-.827.32H6.187c-.783 0-1.45.276-2.003.828-.554.553-.83 1.22-.83 2.003v1.709c0 .427.14.748.42.962.28.214.598.32.955.32h11.52c.427 0 .748-.14.962-.42.213-.28.32-.598.32-.955V8.412c0-.427-.14-.748-.42-.962-.28-.213-.598-.32-.955-.32h-2.24c-.32 0-.58-.117-.78-.352-.2-.235-.3-.523-.3-.864v-.395c0-.33.107-.622.32-.875.214-.253.478-.38.79-.38z"/></svg>B站</a>
+<button class=tmr onclick="event.stopPropagation();timer(this)">&#x25B6; 20</button>
+<span class=dur>20</span></div></div></div></div>
+<div class=section>
+<div class=section-title><span>&#x1F522; 高等数学 · 重点</span><span class=line></span><span class="pill pill-org">150分</span></div>
+<div class=task data-id=m1 data-time=90>
+<div class=chk><svg width=14 height=14 viewBox="0 0 14 14"><path d="M2 7.5L5.5 11L12 3" stroke=white stroke-width=2.5 fill=none stroke-linecap=round stroke-linejoin=round/></svg></div>
+<div class=body><div class=name>高数网课 1 节 + 课后习题</div><div class=desc>从函数与极限开始，逐节推进</div></div>
+<div class=tail>
+<a class=bili href="https://www.bilibili.com/video/BV1swAWerEzS" target=_blank onclick="event.stopPropagation();var t=this.closest('.task').querySelector('.tmr');if(t&&!t.dataset.r)t.click()"><svg width=14 height=14 viewBox="0 0 24 24" fill=currentColor><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.562 3.76v7.36c-.038 1.51-.558 2.765-1.562 3.761-1.004.996-2.263 1.52-3.773 1.574h-.854c-.427 0-.748-.14-.962-.42-.213-.28-.32-.598-.32-.955v-.427c0-.284.107-.534.32-.748.214-.214.49-.32.827-.32h1.709c.783 0 1.45-.276 2.003-.828.554-.553.83-1.22.83-2.002v-6.57c0-.782-.276-1.45-.83-2.003-.553-.554-1.22-.83-2.003-.83h-11.2c-.782 0-1.45.276-2.002.83-.554.553-.83 1.22-.83 2.003v6.569c0 .783.276 1.45.83 2.003.553.553 1.22.829 2.003.829h7.683c.373 0 .683.117.928.35.245.234.368.525.368.874v.427c0 .32-.123.619-.368.896-.245.277-.555.416-.928.416H6.58c-1.51-.054-2.769-.578-3.773-1.574-1.004-.995-1.524-2.25-1.562-3.76v-7.36c.038-1.512.558-2.766 1.562-3.761 1.004-.996 2.263-1.52 3.773-1.574h.79c.427 0 .748.14.962.42.214.28.32.598.32.955v.427c0 .283-.107.533-.32.747-.214.214-.49.32-.827.32H6.187c-.783 0-1.45.276-2.003.828-.554.553-.83 1.22-.83 2.003v1.709c0 .427.14.748.42.962.28.214.598.32.955.32h11.52c.427 0 .748-.14.962-.42.213-.28.32-.598.32-.955V8.412c0-.427-.14-.748-.42-.962-.28-.213-.598-.32-.955-.32h-2.24c-.32 0-.58-.117-.78-.352-.2-.235-.3-.523-.3-.864v-.395c0-.33.107-.622.32-.875.214-.253.478-.38.79-.38z"/></svg>B站</a>
+<button class=tmr onclick="event.stopPropagation();timer(this)">&#x25B6; 90</button>
+<span class=dur>90</span></div></div></div>
+<div class=section>
+<div class=section-title><span>&#x1F4CC; 每周附加 · 选做</span><span class=line></span><span class="pill pill-blu">按需完成</span></div>
+<div class=task data-id=w1 data-time=30>
+<div class=chk><svg width=14 height=14 viewBox="0 0 14 14"><path d="M2 7.5L5.5 11L12 3" stroke=white stroke-width=2.5 fill=none stroke-linecap=round stroke-linejoin=round/></svg></div>
+<div class=body><div class=name>信息技术 · 做 1 套真题</div><div class=desc>计算机专业优势科目，考前再集中</div></div>
+<div class=tail><span class=dur>30</span></div></div>
+<div class=task data-id=w2 data-time=30>
+<div class=chk><svg width=14 height=14 viewBox="0 0 14 14"><path d="M2 7.5L5.5 11L12 3" stroke=white stroke-width=2.5 fill=none stroke-linecap=round stroke-linejoin=round/></svg></div>
+<div class=body><div class=name>政治 · 看新闻 + 背知识点</div><div class=desc>考前 3 个月再全力冲刺</div></div>
+<div class=tail><span class=dur>30</span></div></div>
+<div class=task data-id=w3 data-time=15>
+<div class=chk><svg width=14 height=14 viewBox="0 0 14 14"><path d="M2 7.5L5.5 11L12 3" stroke=white stroke-width=2.5 fill=none stroke-linecap=round stroke-linejoin=round/></svg></div>
+<div class=body><div class=name>周末复习 · 本周错题回顾</div><div class=desc>不欠债，回头看一遍</div></div>
+<div class=tail><span class=dur>15</span></div></div></div><div class=footer>点击任务行自动勾选 · 点 B站 看课+计时同步 · 可切换深色模式<br>数据保存在浏览器，每天打开接着用</div></div><div class=toast id=toast><span class=ico>&#x2713;</span> <span id=ttx>已保存</span></div><script>const pad=n=>String(n).padStart(2,'0'),wd=['日','一','二','三','四','五','六'];
 function dk(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
 function wk(d){const dd=new Date(d),day=dd.getDay(),diff=dd.getDate()-day+(day===0?-6:1);const m=new Date(dd.setDate(diff));return m.getFullYear()+'-'+pad(m.getMonth()+1)+'-'+pad(m.getDate())}
-!function(){const d=new Date();document.getElementById('d').textContent=d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日 周'+wds[d.getDay()]}();
-function rw(){const bar=document.getElementById('w'),t=new Date().getDay(),k=wk(new Date());const sv=JSON.parse(localStorage.getItem('_wk')||'{}'),dt=sv[k]||{};bar.innerHTML=wds.map((d,i)=>{let c='dot';if(i===t)c+=' today';if(dt[i]===true)c+=' done';return '<div class="'+c+'">'+d+'</div>'}).join('');document.getElementById('wc').textContent=Object.values(dt).filter(v=>v===true).length}
+!function(){const d=new Date();document.getElementById('d').textContent=d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日 周'+wd[d.getDay()]}();
+const q=[{en:"The secret of getting ahead is getting started.",cn:"领先的秘诀就是开始行动。"},{en:"Success is the sum of small efforts, repeated day in and day out.",cn:"成功就是日复一日点滴努力的积累。"},{en:"It does not matter how slowly you go as long as you do not stop.",cn:"走得慢没关系，只要不停下来。"},{en:"The best time to plant a tree was 20 years ago. The second best time is now.",cn:"种树最好的时间是十年前，其次是现在。"},{en:"Believe you can and you're halfway there.",cn:"相信你可以，你就已经成功了一半。"},{en:"The only way to do great work is to love what you do.",cn:"做出伟大工作的唯一方法就是热爱你所做的事。"},{en:"Don't watch the clock; do what it does. Keep going.",cn:"不要只看时钟，学它一样一直走下去。"},{en:"The future belongs to those who believe in the beauty of their dreams.",cn:"未来属于那些相信自己梦想之美的人。"},{en:"You don't have to be great to start, but you have to start to be great.",cn:"你不需要很厉害才能开始，但你需要开始才能变得很厉害。"},{en:"Small daily improvements over time lead to stunning results.",cn:"日复一日的小进步，最终带来惊人的结果。"}];
+const qi=new Date().getDate()%q.length;document.getElementById('qe').textContent=q[qi].en;document.getElementById('qc').textContent=q[qi].cn;
+function tt(){const d=document.body.classList.toggle('dark');localStorage.setItem('_t',d?'dark':'light');document.getElementById('themeBtn').textContent=d?'\u{1F319}':'\u{2600}\u{FE0F}'}
+!function(){if(localStorage.getItem('_t')==='dark'){document.body.classList.add('dark');document.getElementById('themeBtn').textContent='\u{1F319}'}}();
+function rw(){const b=document.getElementById('w'),t=new Date().getDay(),k=wk(new Date());const sv=JSON.parse(localStorage.getItem('_wk')||'{}'),dt=sv[k]||{};b.innerHTML=wd.map((d,i)=>{let c='dot';if(i===t)c+=' today';if(dt[i]===true)c+=' done';return '<div class="'+c+'">'+d+'</div>'}).join('');document.getElementById('wc').textContent=Object.values(dt).filter(v=>v===true).length}
 function us(){const sv=JSON.parse(localStorage.getItem('_wk')||'{}');let st=0;const d=new Date();for(let i=0;i<60;i++){const k=wk(d),day=d.getDay();if(sv[k]&&sv[k][day]===true){st++;d.setDate(d.getDate()-1)}else break}document.getElementById('s').textContent=st}
 function ua(){const ts=document.querySelectorAll('.task');let d=0,m=0;ts.forEach(t=>{if(t.classList.contains('done')){d++;m+=parseInt(t.dataset.time)||0}});document.getElementById('dc').textContent=d+'/'+ts.length;document.getElementById('tm').textContent=m}
-let _tt=null;function st(msg){const el=document.getElementById('toast');document.getElementById('toastText').textContent=msg||'已保存';el.classList.add('show');if(_tt)clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),1300)}
-function as(){const key=dk(new Date()),data={};document.querySelectorAll('.task').forEach(t=>{data[t.dataset.id]=t.classList.contains('done')});localStorage.setItem('_d_'+key,JSON.stringify(data));const main=['y1','y2','y3','m1'],md=main.filter(id=>data[id]===true).length;const k=wk(new Date()),sv=JSON.parse(localStorage.getItem('_wk')||'{}');if(!sv[k])sv[k]={};sv[k][new Date().getDay()]=md>=3;localStorage.setItem('_wk',JSON.stringify(sv));rw();us();st('已保存')}
+let _q=null;function st(msg){const el=document.getElementById('toast');document.getElementById('ttx').textContent=msg||'已保存';el.classList.add('show');if(_q)clearTimeout(_q);_q=setTimeout(()=>el.classList.remove('show'),1300)}
+function as(){const key=dk(new Date()),data={};document.querySelectorAll('.task').forEach(t=>{data[t.dataset.id]=t.classList.contains('done')});localStorage.setItem('_d_'+key,JSON.stringify(data));const m=['y1','y2','y3','m1'],md=m.filter(id=>data[id]===true).length;const k=wk(new Date()),sv=JSON.parse(localStorage.getItem('_wk')||'{}');if(!sv[k])sv[k]={};sv[k][new Date().getDay()]=md>=3;localStorage.setItem('_wk',JSON.stringify(sv));rw();us();st()}
 function tg(el,chk){el.querySelector('.chk').classList.toggle('on',chk);el.classList.toggle('done',chk);ua();as()}
 document.querySelectorAll('.task').forEach(el=>{el.addEventListener('click',function(e){if(e.target.closest('.bili')||e.target.closest('.tmr'))return;const d=!this.classList.contains('done');tg(this,d)})})
-const _t={};function timer(btn){const row=btn.closest('.task'),total=parseInt(row.dataset.time)*60,id=row.dataset.id;if(btn.dataset.r==='true'){clearInterval(_t[id]?.iv);btn.dataset.r='false';btn.classList.remove('run');btn.textContent='▶ '+row.dataset.time;if(_t[id])_t[id].rem=parseInt(btn.dataset.rm);return}let rem=btn.dataset.rm?parseInt(btn.dataset.rm):total;btn.dataset.r='true';btn.classList.add('run');const up=()=>{const m=Math.floor(rem/60),s=rem%60;btn.textContent='⏱ '+m+':'+(s<10?'0':'')+s};up();_t[id]={iv:setInterval(()=>{rem--;btn.dataset.rm=rem;up();if(rem<=0){clearInterval(_t[id].iv);btn.dataset.r='false';btn.classList.remove('run');btn.textContent='✓ 完成';tg(row,true);try{const c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.setValueAtTime(0.3,c.currentTime);o.start();setTimeout(()=>o.stop(),500)}catch(e){}}},1000)}}
-!function(){const key=dk(new Date()),sv=localStorage.getItem('_d_'+key);if(sv){const data=JSON.parse(sv);document.querySelectorAll('.task').forEach(el=>{if(data[el.dataset.id]===true)tg(el,true)})}ua();rw();us()}()
-</script>
-</body>
-</html>
+const _h={};function timer(btn){const row=btn.closest('.task'),total=parseInt(row.dataset.time)*60,id=row.dataset.id;if(btn.dataset.r==='true'){clearInterval(_h[id]?.iv);btn.dataset.r='false';btn.classList.remove('run');btn.textContent='\u25B6 '+row.dataset.time;if(_h[id])_h[id].rem=parseInt(btn.dataset.rm);return}let rem=btn.dataset.rm?parseInt(btn.dataset.rm):total;btn.dataset.r='true';btn.classList.add('run');const up=()=>{const m=Math.floor(rem/60),s=rem%60;btn.textContent='\u23F1 '+m+':'+(s<10?'0':'')+s};up();_h[id]={iv:setInterval(()=>{rem--;btn.dataset.rm=rem;up();if(rem<=0){clearInterval(_h[id].iv);btn.dataset.r='false';btn.classList.remove('run');btn.textContent='\u2714 \u5B8C\u6210';tg(row,true);try{const c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.setValueAtTime(0.3,c.currentTime);o.start();setTimeout(()=>o.stop(),500)}catch(e){}}},1000)}}
+!function(){const k=dk(new Date()),sv=localStorage.getItem('_d_'+k);if(sv){const data=JSON.parse(sv);document.querySelectorAll('.task').forEach(el=>{if(data[el.dataset.id]===true)tg(el,true)})}ua();rw();us()}()</script></body></html>
