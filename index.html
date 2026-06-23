@@ -399,6 +399,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
 <span id=mcqExp style="font-size:12px;color:var(--green);margin-top:4px;display:block"></span>
 <span id=mcqScore style="font-size:12px;color:var(--sub)"></span>
+<span style="font-size:10px;color:var(--sub);cursor:pointer;text-decoration:underline" onclick="var f=document.getElementById('mcqAddForm');f.style.display=f.style.display=='none'?'block':'none'">+ 添加题目</span>
+<div id=mcqAddForm style="display:none;margin-top:8px;padding:8px;border:1px dashed var(--card-border);border-radius:8px;background:var(--btn-bg)">
+<div style="font-size:11px;color:var(--sub);margin-bottom:4px">添加自定义题目（保存到浏览器）</div>
+<input id=mcqAddQ placeholder="题目..." style="width:100%;margin-bottom:4px">
+<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px">
+<input id=mcqAddO0 placeholder="选项A" style="flex:1;min-width:45%"><input id=mcqAddO1 placeholder="选项B" style="flex:1;min-width:45%">
+<input id=mcqAddO2 placeholder="选项C" style="flex:1;min-width:45%"><input id=mcqAddO3 placeholder="选项D" style="flex:1;min-width:45%">
+</div>
+<div style="display:flex;gap:4px;align-items:center;margin-bottom:4px">
+<span style="font-size:11px;color:var(--sub)">答案:</span>
+<select id=mcqAddA><option value=0>A</option><option value=1>B</option><option value=2>C</option><option value=3>D</option></select>
+<input id=mcqAddE placeholder="解析(可选)" style="flex:1">
+<select id=mcqAddCh><option value=base>基础</option><option value=os>操作系统</option><option value=net>网络</option><option value=db>数据库</option><option value=prog>编程</option><option value=media>多媒体</option></select>
+</div>
+<button onclick=mcqAddSave() style="padding:6px 12px;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;margin-right:4px">保存</button>
+<button onclick="document.getElementById('mcqAddForm').style.display='none'" style="padding:6px 12px;background:var(--btn-bg);border:1px solid var(--card-border);border-radius:6px;font-size:11px;cursor:pointer">取消</button>
+</div>
 <button onclick=mcqNext() style="padding:6px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">下一题</button>
 </div>
 </div>
@@ -973,7 +990,8 @@ fmSearch(); // init
 // Computer MCQ
 var _mcqChapters={base:[{q:'1 Byte = ?',o:['8 bit','16 bit','32 bit','64 bit'],a:0,e:'1 Byte = 8 bit，是计算机存储的最小寻址单位'},{q:'二进制 1010 转十进制是？',o:['8','9','10','11'],a:2,e:'1×2^3+0×2^2+1×2^1+0×2^0=8+2=10'},{q:'下列哪个是输出设备？',o:['键盘','鼠标','扫描仪','显示器'],a:3,e:'显示器是输出设备，键盘/鼠标/扫描仪都是输入设备'},{q:'RAM 是什么存储器？',o:['只读存储器','随机存取存储器','硬盘存储','光盘存储'],a:1,e:'RAM=Random Access Memory，随机存取，断电数据丢失'},{q:'十六进制 FF 转十进制是？',o:['128','255','256','1024'],a:1,e:'F=15，FF=15×16+15=240+15=255'},{q:'ASCII 码用来表示什么？',o:['图像','音频','英文字符','视频'],a:2,e:'ASCII(American Standard Code)是美国标准信息交换码，用于表示英文字母、数字和符号'},{q:'CPU 的中文名称是？',o:['内存','中央处理器','硬盘','显卡'],a:1,e:'CPU=Central Processing Unit，中央处理器，计算机的核心运算控制部件'},{q:'1KB 等于多少 Byte？',o:['100','512','1000','1024'],a:3,e:'1KB=1024Byte，计算机使用二进制，1024=2^10'}],os:[{q:'操作系统的核心是？',o:['应用程序','文件系统','内核','浏览器'],a:2,e:'内核(Kernel)管理CPU、内存、I/O等硬件资源，是操作系统最核心的部分'},{q:'下列哪个不是操作系统？',o:['Windows','Linux','Python','macOS'],a:2,e:'Python是编程语言，不是操作系统。Windows/Linux/macOS都是OS'},{q:'Windows中Ctrl+C的作用是？',o:['剪切','复制','粘贴','撤销'],a:1,e:'Ctrl+C=Copy复制，Ctrl+X=剪切，Ctrl+V=粘贴，Ctrl+Z=撤销'},{q:'Linux系统的文件权限 rwx 中 x 代表？',o:['读','写','执行','删除'],a:2,e:'r=read读(4)，w=write写(2)，x=execute执行(1)。组合成权限数字如755'},{q:'Android 系统的底层基于哪个内核？',o:['Windows NT','Linux','Darwin','BSD'],a:1,e:'Android底层基于Linux内核，上层使用Java/Kotlin开发。iOS基于Darwin(XNU)'},{q:'进程(Process)和线程(Thread)的关系是？',o:['线程包含进程','进程包含线程','它们相同','没有关系'],a:1,e:'进程是资源分配的基本单位，线程是CPU调度的基本单位。一个进程可包含多个线程'},{q:'死锁(Deadlock)的四个必要条件不包括？',o:['互斥','占有并等待','不可抢占','优先级'],a:3,e:'死锁四条件：互斥、占有并等待、不可抢占、循环等待。优先级不是必要条件'}],net:[{q:'HTTP 的默认端口是？',o:['21','22','80','443'],a:2,e:'HTTP默认80端口，HTTPS默认443，FTP默认21，SSH默认22'},{q:'IP地址分为哪两个版本？',o:['IPv4和IPv6','IPv1和IPv2','IPv3和IPv4','IPv5和IPv6'],a:0,e:'IPv4用32位地址(192.168.1.1)，IPv6用128位地址，解决地址枯竭问题'},{q:'DNS 的作用是？',o:['加密数据','域名解析为IP','存储文件','发送邮件'],a:1,e:'DNS(Domain Name System)将域名转换成IP地址，是互联网的电话簿'},{q:'TCP 和 UDP 的区别是？',o:['TCP更简单','TCP可靠传输/面向连接','UDP更安全','它们完全相同'],a:1,e:'TCP是面向连接的可靠传输协议(三次握手)，UDP是无连接的不可靠传输(快但可能丢包)'},{q:'局域网(LAN)的简称是？',o:['Wide Area Network','Local Area Network','Metropolitan Area Network','Personal Area Network'],a:1,e:'LAN=Local Area Network局域网，WAN=广域网，MAN=城域网，PAN=个域网'},{q:'HTML 的全称是？',o:['Hyper Text Markup Language','High Tech Modern Language','Home Tool Markup Language','Hyper Transfer Markup Language'],a:0,e:'HTML=Hyper Text Markup Language超文本标记语言，是网页的基础结构语言'},{q:'路由器工作在哪一层？',o:['物理层','数据链路层','网络层','应用层'],a:2,e:'路由器工作在OSI模型的第三层（网络层），根据IP地址转发数据包'}],db:[{q:'数据库查询语言是？',o:['HTML','CSS','SQL','PHP'],a:2,e:'SQL(Structured Query Language)是关系型数据库标准查询语言'},{q:'关系型数据库是？',o:['MongoDB','MySQL','Redis','Cassandra'],a:1,e:'MySQL是关系型数据库（表-行-列结构）。MongoDB是文档数据库，Redis是键值缓存，Cassandra是列式存储'},{q:'SQL 中 SELECT 语句的作用是？',o:['插入数据','删除数据','查询数据','修改数据'],a:2,e:'SELECT用于查询数据，INSERT插入，UPDATE修改，DELETE删除，合称CRUD操作'},{q:'数据库事务的 ACID 特性中 I 代表？',o:['原子性','一致性','隔离性','持久性'],a:2,e:'ACID：A=Atomicity原子性，C=Consistency一致性，I=Isolation隔离性，D=Durability持久性'},{q:'主键(Primary Key)的特点是？',o:['可以重复','唯一且不为空','只能数字','自动删除'],a:1,e:'主键唯一标识表中每一行记录，不能重复且不能为NULL，通常用自增ID或UUID'},{q:'NoSQL 数据库的特点不包括？',o:['非关系型','灵活的数据模型','严格表结构','水平扩展能力强'],a:2,e:'NoSQL(Not Only SQL)放弃严格表结构，采用文档/键值/图等灵活模型，适合大数据场景'}],prog:[{q:'下列哪个不是编程语言？',o:['Python','Java','HTTP','C++'],a:2,e:'HTTP是超文本传输协议，不是编程语言'},{q:'面向对象三大特性不包括？',o:['封装','继承','多态','递归'],a:3,e:'面向对象三大特性：封装、继承、多态。递归是算法概念'},{q:'变量命名的正确规则是？',o:['可以数字开头','可以包含空格','字母/下划线/数字，不能数字开头','使用中文'],a:2,e:'变量名规则：字母、下划线或$开头，后可跟字母数字下划线，区分大小写，不能使用关键字'},{q:'算法的时间复杂度 O(n) 中 n 代表？',o:['运行次数','数据规模','内存大小','代码行数'],a:1,e:'O(n)中的n代表输入数据的规模，O(n)表示算法执行时间与输入规模成线性关系'},{q:'Git 是什么工具？',o:['数据库','版本控制系统','编程语言','操作系统'],a:1,e:'Git是分布式版本控制系统，用于追踪代码变更、协作开发，由Linus Torvalds创建'},{q:'编译型语言和解释型语言的区别？',o:['没有区别','编译型先翻译再运行/解释型逐行运行','解释型更快','编译型不需要编译器'],a:1,e:'编译型(C/C++/Go)先编译成机器码再运行；解释型(Python/JS)由解释器逐行执行'}],media:[{q:'常见的图片有损压缩格式是？',o:['PNG','BMP','JPEG','GIF'],a:2,e:'JPEG是有损压缩，适合照片；PNG是无损压缩，支持透明；GIF支持动图；BMP不压缩'},{q:'MP3 属于什么类型的文件？',o:['视频','图片','音频','文档'],a:2,e:'MP3(MPEG Audio Layer 3)是最常见的有损音频压缩格式，大幅减小音频文件体积'},{q:'分辨率 1920×1080 常被称为？',o:['720P','1080P','2K','4K'],a:1,e:'1920×1080=1080P(Full HD)，1280×720=720P，2560×1440=2K，3840×2160=4K'}]};var _mcqCh='base',_mcqQ=_mcqChapters['base'];
 function mcqSwitch(ch){
-  _mcqCh=ch;_mcqQ=_mcqChapters[ch];_mcqCurr=-1;_mcqRight=0;_mcqTotal=0;
+  _mcqCh=ch;_mcqQ=_mcqChapters[ch].slice();_mcqCurr=-1;_mcqRight=0;_mcqTotal=0;
+  _mcqUser.filter(function(u){return u.ch===ch}).forEach(function(u){_mcqQ.push(u.item)});
   document.querySelectorAll('.mcq-ch-btn').forEach(function(b){b.classList.toggle('active',b.dataset.ch===ch)});
   mcqNext();
 }
@@ -1003,6 +1021,21 @@ function mcqAns(i){
   document.getElementById('mcqScore').textContent=_mcqRight+'/'+_mcqTotal;
 }
 mcqNext(); // init
+var _mcqUser=[];(function(){try{_mcqUser=JSON.parse(localStorage.getItem('_mcqUser')||'[]')}catch(e){_mcqUser=[]}})();
+function mcqAddSave(){
+  var q=document.getElementById('mcqAddQ').value.trim();if(!q)return;
+  var o=[0,1,2,3].map(function(i){return document.getElementById('mcqAddO'+i).value.trim()||'选项'+(i+1)});
+  var a=parseInt(document.getElementById('mcqAddA').value);
+  var e=document.getElementById('mcqAddE').value.trim();
+  var ch=document.getElementById('mcqAddCh').value;
+  var item={q:q,o:o,a:a};if(e)item.e=e;
+  _mcqUser.push({ch:ch,item:item});
+  try{localStorage.setItem('_mcqUser',JSON.stringify(_mcqUser))}catch(e){}
+  if(_mcqCh===ch)_mcqQ.push(item);
+  document.getElementById('mcqAddForm').style.display='none';
+  ['mcqAddQ','mcqAddO0','mcqAddO1','mcqAddO2','mcqAddO3','mcqAddE'].forEach(function(id){document.getElementById(id).value=''});
+  alert('已添加 ('+_mcqUser.length+'道自定义题)');
+}
 
 
 // Custom tasks
