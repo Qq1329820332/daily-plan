@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>专升本每日学习计划</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Microsoft YaHei", sans-serif;
+    background: #0f172a;
+    color: #f1f5f9;
+    padding: 20px 16px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 22px; margin-bottom: 4px; color: #818cf8; }
+  .sub { font-size: 13px; color: #94a3b8; margin-bottom: 20px; }
+  .phase {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+    border-left: 4px solid #818cf8;
+  }
+  .phase-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #818cf8;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .phase-title .tag {
+    font-size: 11px;
+    background: #312e81;
+    color: #a5b4fc;
+    padding: 2px 8px;
+    border-radius: 8px;
+  }
+  .item {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #334155;
+    cursor: pointer;
+  }
+  .item:last-child { border-bottom: none; }
+  .item input[type="checkbox"] {
+    width: 18px; height: 18px;
+    accent-color: #818cf8;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .item-label {
+    margin-left: 10px;
+    flex: 1;
+  }
+  .item-label .name { font-size: 14px; color: #f1f5f9; }
+  .item-label .desc { font-size: 12px; color: #64748b; margin-top: 2px; }
+  .item-time {
+    font-size: 12px;
+    color: #64748b;
+    white-space: nowrap;
+  }
+  .item.checked .name { text-decoration: line-through; color: #475569; }
+  .item.checked .desc { color: #334155; }
+
+  .tip-box {
+    background: #312e81;
+    border-radius: 10px;
+    padding: 12px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #c7d2fe;
+    line-height: 1.6;
+  }
+  .tip-box strong { color: #a5b4fc; }
+
+  .week-progress {
+    margin: 16px 0;
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+  }
+  .week-progress .day {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    background: #334155;
+    color: #64748b;
+    cursor: pointer;
+  }
+  .week-progress .day.today { background: #818cf8; color: white; }
+  .week-progress .day.done { background: #34d399; color: #064e3b; }
+
+  .save-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #818cf8;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  .save-btn:hover { background: #6366f1; }
+  .reset-btn {
+    background: transparent;
+    border: 1px solid #475569;
+    color: #94a3b8;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .stats {
+    text-align: center;
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 12px;
+  }
+</style>
+</head>
+<body>
+
+<h1>📋 专升本每日打卡</h1>
+<p class="sub" id="dateDisplay"></p>
+
+<div class="week-progress" id="weekProgress"></div>
+
+<button class="save-btn" onclick="saveProgress()">💾 保存今日进度</button>
+
+<!-- 基础期：英语领航 -->
+<div class="phase">
+  <div class="phase-title">
+    <span>🗣 英语 · 音标+单词</span>
+    <span class="tag">必做</span>
+  </div>
+  <div class="item" data-id="a1">
+    <input type="checkbox">
+    <div class="item-label">
+      <div class="name">周育如音标课 20min</div>
+      <div class="desc">B站搜"周育如音标"，跟着大声读</div>
+    </div>
+    <span class="item-time">20min</span>
+  </div>
+  <div class="item" data-id="a2">
+    <input type="checkbox">
+    <div class="item-label">
+      <div class="name">背专升本词汇 15-20个</div>
+      <div class="desc">APP搜"专升本词汇"，边读边写</div>
+    </div>
+    <span class="item-time">30min</span>
+  </div>
+</div>
+
+<div class="phase">
+  <div class="phase-title">
+    <span>🎯 英语 · 语法基础</span>
+    <span class="tag">必做</span>
+  </div>
+  <div class="item" data-id="b1">
+    <input type="checkbox">
+    <div class="item-label">
+      <div class="name">看完一节语法视频/看书</div>
+      <div class="desc">先从词性、主谓宾、一般现在时开始</div>
+    </div>
+    <span class="item-time">20min</span>
+  </div>
+</div>
+
+<div class="phase">
+  <div class="phase-title">
+    <span>🔢 高等数学</span>
+    <span class="tag">重点</span>
+  </div>
+  <div class="item" data-id="c1">
+    <input type="checkbox">
+    <div class="item-label">
+      <div class="name">看网课1小节 + 做对应习题</div>
+      <div class="desc">B站搜"专升本高数"，从函数极限开刷</div>
+    </div>
+    <span class="item-time">1-1.5h</span>
+  </div>
+</div>
+
+<!-- 课代表 -->
+<div class="phase" style="border-left-color:#34d399;">
+  <div class="phase-title">
+    <span>📌 本周重点</span>
+  </div>
+  <div class="item" data-id="d1">
+    <input type="checkbox">
+    <div class="item-label">
+      <div class="name">信息技术真题 做1套</div>
+      <div class="desc">一周1次就够了，考前再集中</div>
+    </div>
+  </div>
+  <div class="item" data-id="d2">
+    <input type="checkbox">
+    <div class="item-label">
+      <div class="name">政治看新闻+背知识点</div>
+      <div class="desc">每周抽30min，考前3个月再全力搞</div>
+    </div>
+  </div>
+</div>
+
+<div class="tip-box">
+  <strong>💪 今日总时长：约 2.5-3h</strong><br>
+  🚫 学不动就只做前3项：音标+单词+高数，别断<br>
+  ⭐ 同一关刷到90%再过关，别赶进度<br>
+  🎯 目标：英语保60，高数冲分，信息技术捡分
+</div>
+
+<button class="reset-btn" onclick="resetWeek()">⟳ 重置本周</button>
+
+<script>
+  function updateDate() {
+    const now = new Date();
+    const weekDays = ['日','一','二','三','四','五','六'];
+    document.getElementById('dateDisplay').textContent =
+      `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 星期${weekDays[now.getDay()]}`;
+  }
+  updateDate();
+
+  // 星期进度条
+  function renderWeek() {
+    const container = document.getElementById('weekProgress');
+    const now = new Date();
+    const today = now.getDay();
+    const weekDays = ['日','一','二','三','四','五','六'];
+    const saved = JSON.parse(localStorage.getItem('weekProgress') || '{}');
+    const weekKey = getWeekKey(now);
+    
+    container.innerHTML = weekDays.map((d, i) => {
+      let cls = 'day';
+      if (i === today) cls += ' today';
+      if (saved[weekKey] && saved[weekKey][i]) cls += ' done';
+      return `<div class="day ${cls}" onclick="toggleDay(${i})">${d}</div>`;
+    }).join('');
+  }
+
+  function getWeekKey(date) {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+    const monday = new Date(d.setDate(diff));
+    return `${monday.getFullYear()}-${monday.getMonth()+1}-${monday.getDate()}`;
+  }
+
+  function toggleDay(index) {
+    const saved = JSON.parse(localStorage.getItem('weekProgress') || '{}');
+    const weekKey = getWeekKey(new Date());
+    if (!saved[weekKey]) saved[weekKey] = {};
+    saved[weekKey][index] = !saved[weekKey][index];
+    localStorage.setItem('weekProgress', JSON.stringify(saved));
+    renderWeek();
+  }
+
+  function resetWeek() {
+    if (!confirm('确定重置本周进度？')) return;
+    const saved = JSON.parse(localStorage.getItem('weekProgress') || '{}');
+    const weekKey = getWeekKey(new Date());
+    delete saved[weekKey];
+    localStorage.setItem('weekProgress', JSON.stringify(saved));
+    renderWeek();
+    
+    // 同时取消所有勾选
+    document.querySelectorAll('.item input[type="checkbox"]').forEach(cb => {
+      cb.checked = false;
+    });
+    document.querySelectorAll('.item').forEach(item => item.classList.remove('checked'));
+    localStorage.removeItem('dailyChecklist_' + getDateKey(new Date()));
+  }
+
+  function getDateKey(date) {
+    return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+  }
+
+  function saveProgress() {
+    const dateKey = getDateKey(new Date());
+    const data = {};
+    document.querySelectorAll('.item').forEach(item => {
+      const id = item.dataset.id;
+      const checked = item.querySelector('input[type="checkbox"]').checked;
+      if (id) data[id] = checked;
+    });
+    localStorage.setItem('dailyChecklist_' + dateKey, JSON.stringify(data));
+    
+    // 统计完成项
+    const total = Object.keys(data).length;
+    const done = Object.values(data).filter(v => v).length;
+    alert(`✅ 已保存！今日完成 ${done}/${total} 项`);
+    
+    // 如果今天所有项都完成，标记星期进度
+    if (done === total && total > 0) {
+      toggleDay(new Date().getDay());
+    }
+  }
+
+  function loadProgress() {
+    const dateKey = getDateKey(new Date());
+    const saved = localStorage.getItem('dailyChecklist_' + dateKey);
+    if (saved) {
+      const data = JSON.parse(saved);
+      document.querySelectorAll('.item').forEach(item => {
+        const id = item.dataset.id;
+        if (data[id]) {
+          item.querySelector('input[type="checkbox"]').checked = true;
+          item.classList.add('checked');
+        }
+      });
+    }
+  }
+
+  // 点击行切换勾选
+  document.querySelectorAll('.item').forEach(item => {
+    item.addEventListener('click', function(e) {
+      if (e.target.tagName === 'INPUT') return;
+      const cb = this.querySelector('input[type="checkbox"]');
+      cb.checked = !cb.checked;
+      this.classList.toggle('checked');
+    });
+    item.querySelector('input[type="checkbox"]').addEventListener('change', function() {
+      this.closest('.item').classList.toggle('checked');
+    });
+  });
+
+  loadProgress();
+  renderWeek();
+</script>
+</body>
+</html>
