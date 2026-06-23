@@ -69,7 +69,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--toast-bg);color:var(--bg);padding:12px 24px;border-radius:16px;font-size:14px;font-weight:600;opacity:0;transition:all .4s cubic-bezier(.175,.885,.32,1.275);pointer-events:none;z-index:1000;box-shadow:0 8px 30px rgba(0,0,0,.15);display:flex;align-items:center;gap:8px}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast .ico{width:24px;height:24px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}.tool-card{background:var(--card-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--card-border);border-radius:14px;padding:14px;box-shadow:0 2px 12px rgba(149,157,165,.08);transition:all .2s;text-decoration:none;color:var(--text);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}.tool-card:hover{transform:translateY(-2px);background:var(--card-hover);box-shadow:0 8px 24px rgba(149,157,165,0.12)}.tool-card .ico{font-size:28px}.tool-card .nm{font-size:14px;font-weight:600}.tool-card .de{font-size:11px;color:var(--sub)}.footer{text-align:center;padding:16px 0;font-size:12px;color:var(--footer);line-height:1.8}
+.tools-grid{display:none}.tool-card{background:var(--card-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--card-border);border-radius:14px;padding:14px;box-shadow:0 2px 12px rgba(149,157,165,.08);transition:all .2s;text-decoration:none;color:var(--text);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}.tool-card:hover{transform:translateY(-2px);background:var(--card-hover);box-shadow:0 8px 24px rgba(149,157,165,0.12)}.footer{text-align:center;padding:16px 0;font-size:12px;color:var(--footer);line-height:1.8}
 .bnav{position:fixed;bottom:0;left:0;right:0;height:56px;background:var(--card-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--card-border);display:flex;z-index:998;padding-bottom:env(safe-area-inset-bottom)}
 .bnav a,.bnav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--sub);text-decoration:none;font-size:10px;gap:3px;border:none;background:none;cursor:pointer;font-family:inherit;transition:color .2s}
 .bnav a:hover,.bnav button:hover{color:var(--accent)}
@@ -207,6 +207,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 /* PC dual-column */
 @media(min-width:768px){.pc-cols{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}.pc-side{position:sticky;top:16px}}
 
+
+/* tools panel - categorized details */
+.tools-panel{margin-bottom:10px}
+.tool-cat{border:1px solid var(--card-border);border-radius:12px;margin-bottom:6px;background:var(--card-bg);backdrop-filter:blur(8px) saturate(120%);-webkit-backdrop-filter:blur(8px) saturate(120%);overflow:hidden;transition:all .2s}
+.tool-cat[open]{box-shadow:0 4px 16px rgba(124,109,240,.06)}
+.tool-cat summary{padding:12px 16px;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;user-select:none}
+.tool-cat summary::-webkit-details-marker{display:none}
+.tool-cat summary::after{content:'B6';font-size:10px;margin-left:auto;transition:transform .25s;color:var(--sub)}
+.tool-cat[open] summary::after{transform:rotate(90deg)}
+.tool-cat summary:hover{color:var(--accent)}
+.tool-links{padding:0 12px 12px;display:flex;flex-direction:column;gap:4px}
+.tool-link{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;text-decoration:none;color:var(--text);font-size:13px;font-weight:500;transition:all .15s;white-space:nowrap;overflow:hidden}
+.tool-link span{font-size:11px;color:var(--sub);margin-left:auto;flex-shrink:0;text-overflow:ellipsis;overflow:hidden}
+.tool-link:hover{background:var(--card-hover);color:var(--accent)}
+.tool-link:hover span{color:var(--accent)}
 </style>
 
 
@@ -275,7 +290,54 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC"
 <div class=tail><span class=dur>15</span></div></div></div><div class=addtask><input id=add附加 placeholder="+ 添加自定义任务..." onkeypress="if(event.keyCode===13)addCustom('附加')"><button onclick=addCustom('附加')>添加</button></div><div class=section></div>
 </div>
 <div class="tab-panel" id=tab-errors>
-<div class=section-title><span>🧰 学习工具</span><span class=line></span><span class="pill pill-blu">辅助</span></div><div class=tools-grid><a class=tool-card href=https://keykey.cc/word-practice/session target=_blank rel=noopener><span class=ico>⌨</span><span class=nm>KeyKey 打字练单词</span><span class=de>边打字边记专升本词汇</span></a><a class=tool-card href=https://ipachart.app/zh-CN target=_blank rel=noopener><span class=ico>🎵</span><span class=nm>IPA 交互音标表</span><span class=de>点击音标听发音</span></a></div></div><div class=scheck style="margin-bottom:14px"><div class=hdr>🍅 番茄钟</div><div style="display:flex;gap:8px;margin-top:6px"><button class=sv-btn onclick=togglePomo() id=pomoBtn style="float:none">▶ 开始番茄</button><span style="font-size:13px;color:var(--sub);padding:5px 0" id=pomoInfo>25min专注 + 5min休息</span></div><div class=sound-row><input type=checkbox id=soundToggle checked onchange=toggleSound()><label for=soundToggle>音效提醒</label></div></div><div class=scheck id=scheckSec><div class=hdr>📝 每周自检</div><textarea id=scheckText placeholder="这周哪个章节没吃透？下周重点攻什么？"></textarea><button class=sv-btn onclick=saveScheck()>保存</button></div></div>
+<div class=section-title><span>🧰 学习工具</span><span class=line></span><span class="pill pill-blu">辅助</span></div>
+<div class=tools-panel>
+<details class=tool-cat>
+<summary>🇬🇧 英语学习</summary>
+<div class=tool-links>
+<a class=tool-link href=https://keykey.cc/word-practice/session target=_blank rel=noopener>⌨ KeyKey 打字练单词 <span>边打字边记专升本词汇</span></a>
+<a class=tool-link href=https://ipachart.app/zh-CN target=_blank rel=noopener>🎵 IPA 交互音标表 <span>点击音标听发音</span></a>
+<a class=tool-link href=https://dict.eudic.net/ target=_blank rel=noopener>📖 欧路词典 <span>权威中英查词，支持发音</span></a>
+<a class=tool-link href=https://fanyi.baidu.com/ target=_blank rel=noopener>🇨🇳 百度翻译 <span>段落翻译，适合阅读理解</span></a>
+<a class=tool-link href=https://www.deepl.com/translator target=_blank rel=noopener>🌐 DeepL 翻译 <span>全球最准AI翻译引擎</span></a>
+</div>
+</details>
+<details class=tool-cat>
+<summary>🔢 高等数学</summary>
+<div class=tool-links>
+<a class=tool-link href=https://www.wolframalpha.com/ target=_blank rel=noopener>🧮 Wolfram Alpha <span>数学公式计算、画图、求导</span></a>
+<a class=tool-link href=https://www.desmos.com/calculator?lang=zh-CN target=_blank rel=noopener>📈 Desmos 图形计算器 <span>函数可视化，直观理解</span></a>
+<a class=tool-link href=https://www.bilibili.com/video/BV1swAWerEzS target=_blank rel=noopener>📺 B站高数系统课 <span>专升本高数全套视频</span></a>
+<a class=tool-link href=https://space.bilibili.com/88461692 target=_blank rel=noopener>🎬 3Blue1Brown <span>数学直觉动画，B站官方号</span></a>
+</div>
+</details>
+<details class=tool-cat>
+<summary>💻 计算机</summary>
+<div class=tool-links>
+<a class=tool-link href=https://www.runoob.com/ target=_blank rel=noopener>📗 菜鸟教程 <span>编程入门+信息技术考点</span></a>
+<a class=tool-link href=https://leetcode.cn/ target=_blank rel=noopener>⚡ LeetCode 中国 <span>算法刷题，面试必备</span></a>
+<a class=tool-link href=https://github.com/ target=_blank rel=noopener>🐙 GitHub <span>全球最大代码开源社区</span></a>
+<a class=tool-link href=https://developer.mozilla.org/zh-CN/ target=_blank rel=noopener>📘 MDN 中文文档 <span>Web技术权威参考</span></a>
+</div>
+</details>
+<details class=tool-cat>
+<summary>📋 升本政策</summary>
+<div class=tool-links>
+<a class=tool-link href=http://jyt.jiangxi.gov.cn/ target=_blank rel=noopener>🏛 江西省教育厅 <span>官方考试通知、招生计划</span></a>
+<a class=tool-link href=https://www.chsi.com.cn/ target=_blank rel=noopener>🎓 学信网 <span>学历查询、报名入口</span></a>
+<a class=tool-link href=https://www.jxeea.cn/ target=_blank rel=noopener>📝 江西省教育考试院 <span>报名/查分/录取官方渠道</span></a>
+</div>
+</details>
+<details class=tool-cat>
+<summary>⏱ 自律工具</summary>
+<div class=tool-links>
+<a class=tool-link href=https://pomofocus.io/ target=_blank rel=noopener>🍅 Pomofocus 番茄钟 <span>在线番茄计时器</span></a>
+<a class=tool-link href=https://www.rainymood.com/ target=_blank rel=noopener>🌧 Rainy Mood <span>白噪音雨声，专注学习</span></a>
+<a class=tool-link href=https://www.noisli.com/ target=_blank rel=noopener>🎧 Noisli <span>混合白噪音，自定义环境音</span></a>
+<a class=tool-link href=https://www.forestapp.cc/ target=_blank rel=noopener>🌳 Forest 专注森林 <span>种树防刷手机，自律神器</span></a>
+</div>
+</details>
+</div></div><div class=scheck style="margin-bottom:14px"><div class=hdr>🍅 番茄钟</div><div style="display:flex;gap:8px;margin-top:6px"><button class=sv-btn onclick=togglePomo() id=pomoBtn style="float:none">▶ 开始番茄</button><span style="font-size:13px;color:var(--sub);padding:5px 0" id=pomoInfo>25min专注 + 5min休息</span></div><div class=sound-row><input type=checkbox id=soundToggle checked onchange=toggleSound()><label for=soundToggle>音效提醒</label></div></div><div class=scheck id=scheckSec><div class=hdr>📝 每周自检</div><textarea id=scheckText placeholder="这周哪个章节没吃透？下周重点攻什么？"></textarea><button class=sv-btn onclick=saveScheck()>保存</button></div></div>
 <div class=modal id=errModal onclick="if(event.target===this)closeErrModal()"><div class=box><div class=boxtitle>❌ 错题录入</div><select id=errSubj><option>高等数学</option><option>英语</option><option>信息技术</option><option>政治</option></select><textarea id=errCont placeholder="输入错题内容或考点..."></textarea><div class=btn-row><button class=btn-s onclick=saveErr()>保存</button><button class=btn-c onclick=closeErrModal()>取消</button></div><div id=errList style="margin-top:12px"></div></div></div>
 </div>
 <div class="tab-panel" id=tab-ref>
